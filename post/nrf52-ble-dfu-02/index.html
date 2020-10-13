@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Merge Nordic Buttonless DFU with NUS - Lei&#39;s Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="Merge Nordic Buttonless DFU with NUS" />
+<meta property="og:description" content="Nordic provides good examples, but mostly independent from each other. To make a BLE UART service with DFU support, we&rsquo;ll need to merge the two examples:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/nrf52-ble-dfu-02/" />
+<meta property="article:published_time" content="2020-10-08T19:45:59-05:00" />
+<meta property="article:modified_time" content="2020-10-08T19:45:59-05:00" />
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo">
+		<a class="logo__link" href="/" title="Lei&#39;s Blog" rel="home">
+			<div class="logo__item logo__text">
+					<div class="logo__title">Lei&#39;s Blog</div>
+					<div class="logo__tagline">Just another site</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">Home</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Merge Nordic Buttonless DFU with NUS</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-10-08T19:45:59-05:00">October 08, 2020</time></div></div>
+		</header><div class="content post__content clearfix">
+			<p>Nordic provides good examples, but mostly independent from each other. To make a BLE UART service with DFU support, we&rsquo;ll need to merge the two examples:</p>
+<p><strong>ble_app_buttonless_dfu</strong>, and <strong>ble_app_uart</strong>. We start with either one and add another.</p>
+<h1 id="1-adding-nus-to-buttonless-dfu">1 Adding NUS to Buttonless DFU</h1>
+<p>Copy and rename <strong>ble_app_buttonless_dfu_nus_pca10056_s140</strong>, change the solution and project name accordingly in <strong>.emProject</strong> file.</p>
+<p>All the changes can be done either in <code>SES -&gt; options -&gt; common</code> or by directly editing the <strong>.emProject</strong> file as followings.</p>
+<h2 id="11-add-ble-uart-example-required-libraries">1.1 Add BLE UART example required libraries.</h2>
+<p>Find section <code>c_user_include_directories</code> and add:</p>
+<pre><code>../../../../../../components/ble/ble_services/ble_nus
+../../../../../../components/ble/ble_services/ble_nus_c
+../../../../../../components/ble/ble_link_ctx_manager
+../../../../../../components/libraries/fifo
+../../../../../../components/libraries/uart
+</code></pre><h2 id="12-add-source-files">1.2 Add source files</h2>
+<p>Find the section <code>nRF_Libraries</code> and add:</p>
+<pre><code>&lt;folder Name=&quot;nRF_Libraries&quot;&gt;
+......
+&lt;file file_name=&quot;../../../../../../components/libraries/fifo/app_fifo.c&quot; /&gt;
+&lt;file file_name=&quot;../../../../../../components/libraries/uart/app_uart_fifo.c&quot; /&gt;
+&lt;file file_name=&quot;../../../../../../components/libraries/uart/retarget.c&quot; /&gt;
+&lt;/folder&gt;
+</code></pre><p>Find the section <code>nRF_BLE</code> and add:</p>
+<pre><code>&lt;folder Name=&quot;nRF_BLE&quot;&gt;
+......
+&lt;file file_name=&quot;../../../../../../components/ble/ble_link_ctx_manager/ble_link_ctx_manager.c&quot; /&gt;
+......
+&lt;/folder&gt;
+</code></pre><p>Find the section <code>nRF_BLE_Services</code> and add:</p>
+<pre><code>&lt;folder Name=&quot;nRF_BLE_Services&quot;&gt;
+  &lt;file file_name=&quot;../../../../../../components/ble/ble_services/ble_nus/ble_nus.c&quot; /&gt;
+&lt;/folder&gt;
+</code></pre><h2 id="13-make-changes-to-ram">1.3 Make changes to <em>RAM</em></h2>
+<p>Find section <code>linker_section_placement_macros</code></p>
+<pre><code>RAM_START=0x20002280
+RAM_SIZE=0x3dd80
+</code></pre><h2 id="14-make-changes-to-sdk_configh">1.4 Make changes to <em>sdk_config.h</em></h2>
+<h3 id="141-add-to-nrf_ble_services">1.4.1 Add to <em>nRF_BLE_Services</em></h3>
+<pre><code>// &lt;/h&gt;
+//==========================================================
+
+// &lt;h&gt; nRF_BLE_Services
+
+//==========================================================
+// &lt;q&gt; BLE_NUS_C_ENABLED  - ble_nus_c - Nordic UART Central Service
+
+
+#ifndef BLE_NUS_C_ENABLED
+#define BLE_NUS_C_ENABLED 0
+#endif
+
+// &lt;e&gt; BLE_NUS_ENABLED - ble_nus - Nordic UART Service
+//==========================================================
+#ifndef BLE_NUS_ENABLED
+#define BLE_NUS_ENABLED 1
+#endif
+// &lt;e&gt; BLE_NUS_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef BLE_NUS_CONFIG_LOG_ENABLED
+#define BLE_NUS_CONFIG_LOG_ENABLED 0
+#endif
+// &lt;o&gt; BLE_NUS_CONFIG_LOG_LEVEL  - Default Severity level
+
+// &lt;0=&gt; Off
+// &lt;1=&gt; Error
+// &lt;2=&gt; Warning
+// &lt;3=&gt; Info
+// &lt;4=&gt; Debug
+
+#ifndef BLE_NUS_CONFIG_LOG_LEVEL
+#define BLE_NUS_CONFIG_LOG_LEVEL 3
+#endif
+
+// &lt;o&gt; BLE_NUS_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+
+// &lt;0=&gt; Default
+// &lt;1=&gt; Black
+// &lt;2=&gt; Red
+// &lt;3=&gt; Green
+// &lt;4=&gt; Yellow
+// &lt;5=&gt; Blue
+// &lt;6=&gt; Magenta
+// &lt;7=&gt; Cyan
+// &lt;8=&gt; White
+
+#ifndef BLE_NUS_CONFIG_INFO_COLOR
+#define BLE_NUS_CONFIG_INFO_COLOR 0
+#endif
+
+// &lt;o&gt; BLE_NUS_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+
+// &lt;0=&gt; Default
+// &lt;1=&gt; Black
+// &lt;2=&gt; Red
+// &lt;3=&gt; Green
+// &lt;4=&gt; Yellow
+// &lt;5=&gt; Blue
+// &lt;6=&gt; Magenta
+// &lt;7=&gt; Cyan
+// &lt;8=&gt; White
+
+#ifndef BLE_NUS_CONFIG_DEBUG_COLOR
+#define BLE_NUS_CONFIG_DEBUG_COLOR 0
+#endif
+
+// &lt;/e&gt;
+
+// &lt;/e&gt;
+</code></pre><p>You can add other services if you want, here are a few extras I added.</p>
+<pre><code>// &lt;q&gt; BLE_CTS_C_ENABLED  - ble_cts_c - Current Time Service Client
+
+
+#ifndef BLE_CTS_C_ENABLED
+#define BLE_CTS_C_ENABLED 0
+#endif
+
+// &lt;q&gt; BLE_DIS_ENABLED  - ble_dis - Device Information Service
+
+
+#ifndef BLE_DIS_ENABLED
+#define BLE_DIS_ENABLED 0
+#endif
+
+
+// &lt;q&gt; BLE_TPS_ENABLED  - ble_tps - TX Power Service
+
+
+#ifndef BLE_TPS_ENABLED
+#define BLE_TPS_ENABLED 0
+#endif
+
+</code></pre><h3 id="142-add-to-nrf_libraries">1.4.2 Add to <em>nRF_Libraries</em></h3>
+<p>Add APP_FIFO</p>
+<pre><code>// &lt;/h&gt;
+//==========================================================
+
+// &lt;h&gt; nRF_Libraries
+
+//==========================================================
+// &lt;q&gt; APP_FIFO_ENABLED  - app_fifo - Software FIFO implementation
+
+
+#ifndef APP_FIFO_ENABLED
+#define APP_FIFO_ENABLED 1
+#endif
+</code></pre><p>Add APP_UART</p>
+<pre><code>// &lt;/h&gt;
+//==========================================================
+
+// &lt;/e&gt;
+
+// &lt;e&gt; APP_UART_ENABLED - app_uart - UART driver
+//==========================================================
+#ifndef APP_UART_ENABLED
+#define APP_UART_ENABLED 1
+#endif
+// &lt;o&gt; APP_UART_DRIVER_INSTANCE  - UART instance used
+
+// &lt;0=&gt; 0
+
+#ifndef APP_UART_DRIVER_INSTANCE
+#define APP_UART_DRIVER_INSTANCE 0
+#endif
+
+// &lt;/e&gt;
+
+</code></pre><p>Add <code>RETARGET</code></p>
+<pre><code>// &lt;q&gt; RETARGET_ENABLED  - retarget - Retargeting stdio functions
+
+
+#ifndef RETARGET_ENABLED
+#define RETARGET_ENABLED 1
+#endif
+</code></pre><h3 id="143-change-defines">1.4.3 Change <em>defines</em></h3>
+<pre><code>#define NRF_FPRINTF_FLAG_AUTOMATIC_CR_ON_LF_ENABLED 0
+#define NRF_FPRINTF_DOUBLE_ENABLED 1
+#define NRF_LOG_BACKEND_RTT_ENABLED 1
+#define NRF_LOG_BACKEND_UART_ENABLED 0
+#endif
+</code></pre><p>increase the UUID count</p>
+<pre><code>#define NRF_SDH_BLE_VS_UUID_COUNT 2
+</code></pre><h2 id="15-make-changes-in-mainc">1.5 Make changes in <em>main.c</em></h2>
+<h3 id="151-add-headers">1.5.1 Add headers</h3>
+<pre><code>#include &quot;ble_nus.h&quot;
+#include &quot;app_uart.h&quot;
+
+#if defined (UART_PRESENT)
+#include &quot;nrf_uart.h&quot;
+#endif
+#if defined (UARTE_PRESENT)
+#include &quot;nrf_uarte.h&quot;
+#endif
+</code></pre><h3 id="152-add-defines">1.5.2 Add <em>defines</em></h3>
+<pre><code>#define DEVICE_NAME                     &quot;Nordic_Buttonless_NUS&quot;   
+
+#define NUS_SERVICE_UUID_TYPE           BLE_UUID_TYPE_VENDOR_BEGIN                  /**&lt; UUID type for the Nordic UART Service (vendor specific). */
+#define UART_TX_BUF_SIZE                256                                         /**&lt; UART TX buffer size. */
+#define UART_RX_BUF_SIZE                256                                         /**&lt; UART RX buffer size. */
+
+BLE_NUS_DEF(m_nus, NRF_SDH_BLE_TOTAL_LINK_COUNT);
+
+static uint16_t m_ble_nus_max_data_len  = BLE_GATT_ATT_MTU_DEFAULT - 3;  
+</code></pre><h3 id="153-copy-ble-uart-functions-over">1.5.3 Copy BLE UART functions over</h3>
+<pre><code>static void nus_data_handler(ble_nus_evt_t * p_evt)
+</code></pre><pre><code>static void services_init(void)
+{
+    ble_nus_init_t            nus_init;
+
+    // Initialize NUS.
+    memset(&amp;nus_init, 0, sizeof(nus_init));
+
+    nus_init.data_handler = nus_data_handler;
+
+    err_code = ble_nus_init(&amp;m_nus, &amp;nus_init);
+    APP_ERROR_CHECK(err_code);
+    ......
+}
+</code></pre><pre><code>void uart_event_handle(app_uart_evt_t * p_event)
+
+static void uart_init(void)
+</code></pre><p>Finally add <code>uart_init()</code> and <code>printf</code></p>
+<pre><code>int main(void)
+{
+  ......
+  err_code = ble_dfu_buttonless_async_svci_init();
+  APP_ERROR_CHECK(err_code);
+
+  uart_init();
+
+  ......
+
+  printf(&quot;\r\nUART started.\r\n&quot;);
+
+  ......
+}
+</code></pre><h1 id="2-adding-buttoneless-dfu-to-nus">2. Adding Buttoneless DFU to NUS</h1>
+<p>This <a href="https://devzone.nordicsemi.com/f/nordic-q-a/34964/buttonless-dfu-integration-in-ble-app-uart-example-compiling-problem" title="add buttonless dfu services">post</a> has a guide to add <strong>buttonless dfu services</strong> to <strong>ble_app_uart</strong> example.
+We will need</p>
+<pre><code>nrf_dfu_types.h
+nrf_bootloader_info.h
+</code></pre><h2 id="21-changes-in-emproject">2.1 Changes in <em>.emProject</em></h2>
+<p>Add to <code>c_user_include_directories</code></p>
+<pre><code>../../../../../../components/libraries/bootloader
+../../../../../../components/libraries/bootloader/ble_dfu
+../../../../../../components/libraries/bootloader/dfu
+../../../../../../components/libraries/svc
+</code></pre><p>Find section <code>c_preprocessor_definitions</code> or in <code>SES -&gt; Options -&gt; Common -&gt; Preprocessor -&gt; Preprocessor Definitions</code> and add the <a href="https://devzone.nordicsemi.com/f/nordic-q-a/35365/pca10056-nrf52840-how-do-i-use-ble_app_hrs-sample-code-add-buttonless_dfu-function/135867#135867" title="definitions">definitions</a> below:</p>
+<pre><code>BL_SETTINGS_ACCESS_ONLY
+NRF_DFU_SVCI_ENABLED
+NRF_DFU_TRANSPORT_BLE=1
+</code></pre><p>Make changes to <code>linker_section_placement_macros</code></p>
+<pre><code>RAM_START=0x20002AF8
+RAM_SIZE=0x3D508
+</code></pre><p>Add source files in folder <code>nRF_SVC</code></p>
+<pre><code>&lt;folder Name=&quot;nRF_SVC&quot;&gt;
+  &lt;file file_name=&quot;../../../../../../components/libraries/bootloader/dfu/nrf_dfu_svci.c&quot; /&gt;
+&lt;/folder&gt;
+</code></pre><p>Add source files in folder <code>nRF_DFU</code></p>
+<pre><code>&lt;folder Name=&quot;nRF_DFU&quot;&gt;
+  &lt;file file_name=&quot;../../../../../../components/ble/ble_services/ble_dfu/ble_dfu.c&quot; /&gt;
+  &lt;file file_name=&quot;../../../../../../components/ble/ble_services/ble_dfu/ble_dfu_bonded.c&quot; /&gt;
+  &lt;file file_name=&quot;../../../../../../components/ble/ble_services/ble_dfu/ble_dfu_unbonded.c&quot; /&gt;
+&lt;/folder&gt;
+</code></pre><h2 id="23-changes-in-sdk_configh">2.3 Changes in <em>sdk_config.h</em></h2>
+<p>In section <code>nRF_Libraries</code>, set</p>
+<pre><code>#define NRF_LOG_ENABLED 1
+#define NRF_SDH_BLE_VS_UUID_COUNT 2
+</code></pre><p>In section <code>nRF_DFU</code>, set</p>
+<pre><code>#define BLE_DFU_ENABLED 1
+</code></pre><p>Note, this is not used anymore as stated <a href="https://devzone.nordicsemi.com/f/nordic-q-a/46869/ble_dfu_enabled-not-used-in-library/185836#185836" title="BLE_DFU_ENABLED">here</a>:</p>
+<blockquote>
+<p>the macro BLE_DFU_ENABLED is not used in the bootloader library. It is simply an artifact from a previous SDK version.</p>
+</blockquote>
+<h2 id="24-changes-in-mainc">2.4 Changes in <em>main.c</em></h2>
+<p>Add header</p>
+<pre><code>#include &quot;ble_dfu.h&quot;
+#include &quot;nrf_bootloader_info.h&quot;
+#include &quot;nrf_dfu_ble_svci_bond_sharing.h&quot;
+#include &quot;nrf_svci_async_function.h&quot;
+#include &quot;nrf_svci_async_handler.h&quot;
+</code></pre><p>Copy functions over</p>
+<pre><code>static void advertising_config_get(ble_adv_modes_config_t * p_config)
+static void disconnect(uint16_t conn_handle, void * p_context)
+static void ble_dfu_evt_handler(ble_dfu_buttonless_evt_type_t event)
+</code></pre><pre><code>static void services_init(void)
+{
+    ......
+    ble_dfu_buttonless_init_t   dfus_init = {0};
+
+    // Initalize buttonless DFU
+    dfus_init.evt_handler = ble_dfu_evt_handler;
+
+    err_code = ble_dfu_buttonless_init(&amp;dfus_init);
+    APP_ERROR_CHECK(err_code);
+    ......
+}
+</code></pre><pre><code>static void sleep_mode_enter(void)
+{
+    ......
+    // err_code = sd_power_system_off();
+
+    err_code = nrf_sdh_disable_request();
+    APP_ERROR_CHECK(err_code);
+}
+</code></pre><pre><code>static void advertising_init(void)
+{
+    .....
+    // init.config.ble_adv_fast_enabled  = true;
+    // init.config.ble_adv_fast_interval = APP_ADV_INTERVAL;
+    // init.config.ble_adv_fast_timeout  = APP_ADV_DURATION;
+    advertising_config_get(&amp;init.config);
+    ......
+}
+</code></pre><pre><code>int main(void)
+{
+    ......
+    // Initialize the async SVCI interface to bootloader before any interrupts are enabled.
+    err_code = ble_dfu_buttonless_async_svci_init();
+    APP_ERROR_CHECK(err_code);
+
+</code></pre><p>This <a href="https://devzone.nordicsemi.com/f/nordic-q-a/39873/buttonless-secure-dfu---preparing-for-production" title="DFU function explanation">post</a> has a nice explanation of the functions used in buttonless DFU services</p>
+<h2 id="25-add-pear-manager">2.5 Add <em>Pear Manager</em></h2>
+<p>You will need link all required files to solve the messy errors related to <code>Peer Manager</code></p>
+<pre><code>&lt;folder Name=&quot;nRF_Libraries&quot;&gt;
+......
+&lt;file file_name=&quot;../../../../../../components/libraries/fstorage/nrf_fstorage.c&quot; /&gt;
+&lt;file file_name=&quot;../../../../../../components/libraries/fstorage/nrf_fstorage_sd.c&quot; /&gt;
+&lt;file file_name=&quot;../../../../../../components/libraries/fds/fds.c&quot; /&gt;
+&lt;/folder&gt;
+</code></pre><pre><code>&lt;folder Name=&quot;nRF_BLE&quot;&gt;
+  ......
+  &lt;file file_name=&quot;../../../../../../components/ble/peer_manager/auth_status_tracker.c&quot; /&gt;
+  &lt;file file_name=&quot;../../../../../../components/ble/peer_manager/gatt_cache_manager.c&quot; /&gt;
+  &lt;file file_name=&quot;../../../../../../components/ble/peer_manager/gatts_cache_manager.c&quot; /&gt;
+  &lt;file file_name=&quot;../../../../../../components/ble/peer_manager/id_manager.c&quot; /&gt;
+  &lt;file file_name=&quot;../../../../../../components/ble/peer_manager/peer_data_storage.c&quot; /&gt;
+  &lt;file file_name=&quot;../../../../../../components/ble/peer_manager/peer_database.c&quot; /&gt;
+  &lt;file file_name=&quot;../../../../../../components/ble/peer_manager/peer_id.c&quot; /&gt;
+  &lt;file file_name=&quot;../../../../../../components/ble/peer_manager/peer_manager.c&quot; /&gt;
+  &lt;file file_name=&quot;../../../../../../components/ble/peer_manager/peer_manager_handler.c&quot; /&gt;
+  &lt;file file_name=&quot;../../../../../../components/ble/peer_manager/pm_buffer.c&quot; /&gt;
+  &lt;file file_name=&quot;../../../../../../components/ble/peer_manager/security_dispatcher.c&quot; /&gt;
+  &lt;file file_name=&quot;../../../../../../components/ble/peer_manager/security_manager.c&quot; /&gt;
+&lt;/folder&gt;
+</code></pre><p>Add to <strong>sdk_config.h</strong></p>
+<pre><code>#define PEER_MANAGER_ENABLED 1
+
+#define FDS_ENABLED 1
+#define NRF_FSTORAGE_ENABLED 1
+</code></pre><pre><code>#include &quot;peer_manager.h&quot;
+#include &quot;peer_manager_handler.h&quot;
+</code></pre><p>changes in <strong>main.c</strong>
+static void peer_manager_init()</p>
+<h1 id="3-remarks">3 Remarks</h1>
+<h2 id="31-you-may-encounter-errors">3.1 You may encounter errors</h2>
+<pre><code>&lt;warning&gt; nrf_sdh_ble: Insufficient RAM allocated for the SoftDevice.
+&lt;warning&gt; nrf_sdh_ble: Change the RAM start location from 0x20002270 to 0x20002AF8.
+&lt;warning&gt; nrf_sdh_ble: Maximum RAM size for application is 0x3D508.
+</code></pre><p>Change RAM size accordingly</p>
+<h2 id="32-missing-function-advertising_config_get">3.2 Missing function <em>advertising_config_get</em>?</h2>
+<p>it is implemented directly inside <code>advertising_init</code>.</p>
+<h2 id="33-what-is-app_shutdown_handler-doing">3.3 What is <em>app_shutdown_handler</em> doing?</h2>
+<p>See this <a href="https://devzone.nordicsemi.com/f/nordic-q-a/44492/buttonless-dfu-confirm-action/204221#204221" title="buttonless_dfu_confirm_action">link</a> for exaplaination of actions in <code>buttonless_dfu</code>;
+NRF_PWR_MGMT_HANDLER_REGISTER(app_shutdown_handler, 0);</p>
+<h2 id="34-nrf_sdh_disable_request-and-gpregret2">3.4 <em>nrf_sdh_disable_request</em> and <em>gpregret2</em>?</h2>
+<p>See links <a href="https://devzone.nordicsemi.com/f/nordic-q-a/61788/calls-to-nrf_sdh_disable_request-interfere-with-buttonless-dfu">here</a> and <a href="https://devzone.nordicsemi.com/f/nordic-q-a/42207/start-and-stop-advertising-with-dfu-service">here</a> for detailed explanation.
+buttonless_dfu_sdh_state_observer
+NRF_SDH_STATE_OBSERVER(m_buttonless_dfu_state_obs, 0)</p>
+<h2 id="35-enter-sleep-mode">3.5 Enter sleep mode</h2>
+<p>ble NUS              sd_power_system_off();
+ble Buttonless DFU   nrf_sdh_disable_request();</p>
+<h2 id="36-nrf_error_no_mem-error">3.6 <em>NRF_ERROR_NO_MEM</em> error</h2>
+<p>See link <a href="https://devzone.nordicsemi.com/f/nordic-q-a/51947/how-to-resolve-the-error-nrf_error_no_mem-at-the-case-app_uart_communication_error-in-uart_event_handle">here</a> and <a href="https://devzone.nordicsemi.com/f/nordic-q-a/45438/app_uart_communication_error-on-nrf52832/178769#178769">here</a>.</p>
+<h2 id="37-others">3.7 Others:</h2>
+<ul>
+<li><a href="https://devzone.nordicsemi.com/f/nordic-q-a/63330/buttonless-ota-hanging/259984#259984">Buttonless OTA Hanging</a></li>
+<li><a href="https://devzone.nordicsemi.com/f/nordic-q-a/41480/multiperipheral-nus-crashes/161677#161677">Multiperipheral NUS crashes</a></li>
+<li><a href="https://devzone.nordicsemi.com/f/nordic-q-a/57018/example-of-a-bootloader-that-could-boot-2-different-app-codes/231682#231682">Dual bank bootloader</a></li>
+<li><a href="https://devzone.nordicsemi.com/f/nordic-q-a/18389/sdk12-2-secure-dfu-timeout">Watch dog</a></li>
+</ul>
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/nordic/" rel="tag">Nordic</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/ble/" rel="tag">BLE</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/nus/" rel="tag">NUS</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/dfu/" rel="tag">DFU</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Lei Shi avatar" src="/img/avatar.png" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name"></span>
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/nrf52-ble-dfu-01/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">Nordic BLE Device Firmware Update Bootloader</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/post/nrf52-ble-serial/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">Nordic BLE Serial</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-serial/">Nordic BLE Serial</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-dfu-02/">Merge Nordic Buttonless DFU with NUS</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-dfu-01/">Nordic BLE Device Firmware Update Bootloader</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/imx8mm-aosp-01/">iMX8M Mini with AOSP Beginner Part 1</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/nordic-ble-01/">Nordic BLE development with SES and VS code in Ubuntu</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/aosp/" title="AOSP">AOSP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ble/" title="BLE">BLE</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dfu/" title="DFU">DFU</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/imx8mm/" title="iMX8MM">iMX8MM</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linux/" title="Linux">Linux</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nordic/" title="Nordic">Nordic</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nus/" title="NUS">NUS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nxp/" title="NXP">NXP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/segger/" title="SEGGER">SEGGER</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/serial/" title="Serial">Serial</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu/" title="Ubuntu">Ubuntu</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/vs-code/" title="VS Code">VS Code</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 Lei&#39;s Blog.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

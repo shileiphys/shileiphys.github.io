@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SEGGER on Lei&#39;s Blog</title>
+    <link>/tags/segger/</link>
+    <description>Recent content in SEGGER on Lei&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 17 Aug 2019 14:14:31 -0500</lastBuildDate><atom:link href="/tags/segger/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Nordic BLE development with SES and VS code in Ubuntu</title>
+      <link>/post/nordic-ble-01/</link>
+      <pubDate>Sat, 17 Aug 2019 14:14:31 -0500</pubDate>
+      
+      <guid>/post/nordic-ble-01/</guid>
+      <description>&lt;p&gt;The nRF5 series of Bluetooth low energy chip is a very popular platform from Nordic Semiconductor. Currently there are four &lt;a href=&#34;https://infocenter.nordicsemi.com/topic/ug_getting_started/UG/common/nordic_tools.html&#34; title=&#34;IDE&#34;&gt;IDEs&lt;/a&gt; with compiler supported by Nordic, however, for Linux users there are only two options available: SEGGER Embedded Studio (SES) and GNU/GCC.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

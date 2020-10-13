@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Serial on Lei&#39;s Blog</title>
+    <link>/tags/serial/</link>
+    <description>Recent content in Serial on Lei&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 09 Oct 2020 00:57:03 -0500</lastBuildDate><atom:link href="/tags/serial/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Nordic BLE Serial</title>
+      <link>/post/nrf52-ble-serial/</link>
+      <pubDate>Fri, 09 Oct 2020 00:57:03 -0500</pubDate>
+      
+      <guid>/post/nrf52-ble-serial/</guid>
+      <description>&lt;p&gt;The &lt;em&gt;nRF Serial Port Library&lt;/em&gt; is &lt;em&gt;designed as a more sophisticated replacement for the app_uart module&lt;/em&gt;, as pointed out at the library&amp;rsquo;s &lt;a href=&#34;https://infocenter.nordicsemi.com/topic/sdk_nrf5_v16.0.0/serial_example.html&#34; title=&#34;serial port libraries&#34;&gt;page&lt;/a&gt;, there are many advantages of this module over app_uart:&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

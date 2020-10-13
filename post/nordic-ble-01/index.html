@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Nordic BLE development with SES and VS code in Ubuntu - Lei&#39;s Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="Nordic BLE development with SES and VS code in Ubuntu" />
+<meta property="og:description" content="The nRF5 series of Bluetooth low energy chip is a very popular platform from Nordic Semiconductor. Currently there are four IDEs with compiler supported by Nordic, however, for Linux users there are only two options available: SEGGER Embedded Studio (SES) and GNU/GCC." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/nordic-ble-01/" />
+<meta property="article:published_time" content="2019-08-17T14:14:31-05:00" />
+<meta property="article:modified_time" content="2019-08-17T14:14:31-05:00" />
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo">
+		<a class="logo__link" href="/" title="Lei&#39;s Blog" rel="home">
+			<div class="logo__item logo__text">
+					<div class="logo__title">Lei&#39;s Blog</div>
+					<div class="logo__tagline">Just another site</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">Home</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Nordic BLE development with SES and VS code in Ubuntu</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2019-08-17T14:14:31-05:00">August 17, 2019</time></div></div>
+		</header><div class="content post__content clearfix">
+			<p>The nRF5 series of Bluetooth low energy chip is a very popular platform from Nordic Semiconductor. Currently there are four <a href="https://infocenter.nordicsemi.com/topic/ug_getting_started/UG/common/nordic_tools.html" title="IDE">IDEs</a> with compiler supported by Nordic, however, for Linux users there are only two options available: SEGGER Embedded Studio (SES) and GNU/GCC.</p>
+<p>This tutorial is aim to walk you through how to set up the develop environment with <em>SES</em> and <em>Visual Studio (VS) Code</em> in Ubuntu. The hardware used here is Nordic nRF52840 development kit.</p>
+<h2 id="1-nordic-nrf5-sdk">1. Nordic nRF5 SDK</h2>
+<p>Go to Nordic website of <a href="https://www.nordicsemi.com/Software-and-Tools/Software/nRF5-SDK" title="SDK">nRF5 SDK</a>, find the compatible version, download and unzip it (the current version is <code>nRF5_SDK_15.3.0_59ac345</code>). Create a new folder named <code>nRF5</code> (or anything you like) under the home directory, and <strong>move</strong> the SDK folder to it. Later you may find some useful example that was built for a specific version, in that case, just download that version of SDK and move it under this <code>nRF5</code> folder.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd
+$ mkdir nRF5
+</code></pre></div><h2 id="2-segger-embedded-studio">2. SEGGER Embedded Studio</h2>
+<p>SEGGER Embedded Studio (SES) is the recommended platform by Nordic. It is free for use with <code>nRF</code> devices and is available for Windows, Linux and OSX. There&rsquo;s a very good series of <a href="https://www.youtube.com/playlist?list=PLx_tBuQ_KSqGHmzdEL2GWEOeix-S5rgTV" title="nRF5 with SEGGER">YouTube</a> videos to get you started. You can also watch the <a href="https://www.youtube.com/watch?v=CiX-rLwOnKc" title="Download &amp; First Run"><em>Download &amp; First Run</em></a> from SEGGER too.</p>
+<h3 id="install-segger">Install SEGGER</h3>
+<p>Download and extract the <a href="https://www.segger.com/downloads/embedded-studio/" title="SEGGER">SEGGER Embedded Studio for ARM Linux 64-bit</a>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">sudo ./install_segger_embedded_studio
+</code></pre></div><p>If this is the first time to run SES, you may be asked to select a license. Choose the <em><strong>free</strong></em> version and fill in the information. Click <em><strong>request</strong></em> and you will receive an email with the activation key. Select <em><strong>enter activation key</strong></em>, copy and paste the key from your email and click <em><strong>install license</strong></em>.</p>
+<h3 id="install-j-link-software-and-documentation-pack">Install J-Link Software and Documentation Pack</h3>
+<p>The windows installer includes the J-Link software, which is not included in the Linux version. Download the <a href="https://www.segger.com/downloads/jlink/#J-LinkSoftwareAndDocumentationPack" title="J-Link">.deb</a> file and double-click to install it with Ubuntu Software.</p>
+<h3 id="compile-and-run">Compile and Run</h3>
+<p>A common practice to work with Nordic BLE is to build from their example code. Thanks to all the hard coded links in their SES project settings, it&rsquo;s better to keep all the relative path intact too. You can, however, create your own project folder under <code>&quot;&lt;path-to-nRF5_SDK&gt;/examples/&quot;</code> and copy the original example code to it so you won&rsquo;t mess up the original one. Let&rsquo;s assume we are already inside the examples directory, now copy <code>ble_app_blinky</code> to our project folder.</p>
+<pre><code>$ mkdir my_projects
+$ cd my_projects
+$ cp -r ../ble_peripheral/ble_app_blinky .
+</code></pre><p>It should have a structure like this:<br>
+<img src="/images/blinky_tree.png" alt="test"></p>
+<p>Now start SEGGER Embedded Studio, open the project file <code>.emProject</code> deep down the folder <code>ble_app_blinky/pca10056/s140/ses/</code>. Have your nRF5 dev kit plugged into the computer and swtich on power. A <code>JLINK</code> device should be mounted automatically. If not, check the j-Link software is correctly installed. Click <em><strong>Build -&gt; Build and Run</strong></em>, the SES should automatically compile and download the code to the develop board. If all successful LED-1 would turn on now, and you should be able use <a href="https://www.nordicsemi.com/Software-and-Tools/Development-Tools/nRF-Connect-for-desktop" title="nRF Connect Desktop">nRF Connect</a> to scan and see the <code>Nordic_Blinky</code>.</p>
+<p>The SES is working perfectly fine, besides how can anyone complain something free? Except it&rsquo;s so &hellip; <em><strong>ugly</strong></em>! The whole IDE looks so outdated that reminds you earlier 2000s. There&rsquo;s no syntax highlighting, could not even collapse a code block. Yes it&rsquo;s free, get the job done and a pretty good debugger too. But we want more! If you did a google search, you would find many of the desired features have been on their to-do list for years &hellip; Luckily, we can use Visual Studio Code.</p>
+<h2 id="3-visual-studio-code">3. Visual Studio Code</h2>
+<p>I used to use Atom editor, but recently switched to VS code and found it quite convenient to configure and work with.</p>
+<h3 id="install-vscode">Install VSCode</h3>
+<p>Download <a href="https://code.visualstudio.com/" title="VSCode">.deb</a> file and double-click it to install.</p>
+<h3 id="install-gnu-arm-embedded-toolchain">Install GNU Arm Embedded Toolchain</h3>
+<p>We&rsquo;ll use the toolchain to configure our settings and later to compile our project. Download the <a href="https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads" title="GNU ARM Toolchain">ARM GNU Toolchain</a>. Current version is 8-2019-q3-update Linux 64-bit. Extract it to a preferred location, e.g. <code>~/nRF5/</code>.</p>
+<h3 id="set-up-environment">Set up Environment</h3>
+<p>Start VS code and select <em><strong>File -&gt; Open Folder</strong></em>, navigate to the <code>ble_app_blinky</code> and click <em><strong>OK</strong></em>. Open up the <code>main.c</code> you will find many header files are missing links. Now we need to setup path for the compiler.</p>
+<p><em><strong>Configure c_cpp_properties.json</strong></em><br>
+VS code uses c_cpp_properties.json to setup paths to compilers and libraries for c/c++ projects, which allows navigating files by tracing through definitions of headers, functions, constants and variables. <strong>Press</strong> <code>CTRL+SHIFT+P</code>, type and select <code>C/C++: Edit Configurations (JSON)</code>. Visual Studio Code will create a <code>c_cpp_properties.json</code> file with the default settings inside the <code>.vscode</code> folder generated for your project.</p>
+<p><img src="/images/default_c_cpp.png" alt="default_c_cpp"></p>
+<p>Set the <code>&quot;compilerPath&quot;</code> to <code>&lt;path-to-arm-tool-chain&gt;</code>, e.g. <code>~/nRF5/gcc-arm-none-eabi-8-2019-q3-update/bin/arm-none-eabi-gcc'</code>. Set the <code>&quot;include Path&quot;:</code> to include all the headers from <code>nRF SDK</code> as well as files in your project folder.</p>
+<p>A simple setting is shown here. Later you may want to change the list of <code>&quot;includePath&quot;</code> to include only the libraries you use by listing them individually instead of looping all with <code>**</code>.</p>
+<p><img src="/images/simple_c_cpp.png" alt="simple_c_cpp"></p>
+<p>Now with the <code>json</code> file in place, you should be able to right-click any headers, functions, and select <code>go to definition</code> to find their source code. <strong>Neat!</strong></p>
+<p><em><strong>Choose A Theme</strong></em><br>
+The default Theme of VS code doesn&rsquo;t do much syntax highlighting, but an huge slot of customized themes can be found via VS code extensions. I use <code>Atom One Dark</code> but you can choose whatever you like.</p>
+<p><em><strong>Change Font Settings</strong></em><br>
+One small annoying thing you may find later if you open a new <strong>Terminal</strong> and look at the file names, is that the underscores are all rendered invisible for some reason. To fix it, open <em><strong>File -&gt; Preferences -&gt; Settings -&gt; Text Editor -&gt; Font -&gt; Font Family</strong></em>, remove <code>'monospace'</code>, the one with the quotation mark.</p>
+<h3 id="test-with-segger">Test with SEGGER</h3>
+<p>Let&rsquo;s change the advertising LED number from <code>BSP_BOARD_LED_0</code> to <code>BSP_BOARD_LED_3</code> at <code>line 72</code>. Save it and switch back to <code>SES</code> again, make sure the line has been changed. Rebuild the project and run. The LED3 should turn on now.</p>
+<p><img src="/images/20190828_change_adv_led.png" alt="change_adv_led"></p>
+<p>If you just want use VS code as an awesome editor, you can stop here now. Next we&rsquo;ll use <code>nRF5 Command Line Tools</code> to compile and flash the code.</p>
+<h3 id="compile-with-gcc">Compile with GCC</h3>
+<h4 id="install-nrf5x-command-line-tools">Install nRF5x Command Line Tools</h4>
+<p>Download the <a href="https://www.nordicsemi.com/Software-and-Tools/Development-Tools/nRF-Command-Line-Tools" title="command line tool">command line tools</a>. You can either double-click to install the <code>.deb</code> file or extract the <code>.tar</code> file to anywhere you want but don&rsquo;t forget to add directory to the <code>$PATH</code>, e.g., add the following lines at the end of your <code>.bashrc</code> file:</p>
+<pre><code># NRF52 Command Line Tools
+export PATH=&quot;&lt;path to nrf_command_line_tools&gt;/mergehex:$PATH&quot;
+export PATH=&quot;&lt;path to nrf_command_line_tools&gt;/nrfjprog:$PATH&quot;
+</code></pre><p>Verify the tools have been installed properly:</p>
+<pre><code>$ nrfjprog -v
+nrfjprog version: 10.3.0
+JLinkARM.dll version: 6.48b
+</code></pre><h4 id="configuring-your-toolchain">Configuring Your Toolchain</h4>
+<p>Inside your <code>&lt;nRF5_SDK&gt;/components/toolchain/gcc/</code> open <code>Makefile.posix</code> (for Linux user), change the value of <code>GNU_INSTALL_ROOT</code> to match the <code>&lt;ARM GNU Tool&gt;/bin/</code> directory, e.g. the path to <code>gcc-arm-none-eabi-8-2019-q3-update</code>.</p>
+<pre><code>GNU_INSTALL_ROOT ?= &lt;path-to-gcc-arm-none-eabi-8-2019-q3-update&gt;/bin/
+GNU_VERSION ?= 8.3.1
+GNU_PREFIX ?= arm-none-eabi
+</code></pre><p>The <code>GNU_VERSION</code> can be found by typing the following command inside your <code>&lt;GNU_INSTALL_ROOT&gt;</code> directory.</p>
+<pre><code>$ ./arm-none-eabi-gcc --version
+arm-none-eabi-gcc (GNU Tools for Arm Embedded Processors 8-2019-q3-update) 8.3.1 20190703 (release) [gcc-8-branch revision 273027]
+Copyright (C) 2018 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+</code></pre><h4 id="compile-and-run-1">Compile and Run</h4>
+<p>Now let&rsquo;s change back the advertising LED from <code>BSP_BOARD_LED_3</code> to <code>BSP_BOARD_LED_0</code>, build and run the <code>ble_app_blinky</code> again.</p>
+<h5 id="build-application"><em>Build application</em></h5>
+<p>To build from <code>VS code</code>, start a new terminal by selecting <code>Terminal -&gt; New Terminal</code>. Now you are inside the <code>ble_app_blinky</code> folder</p>
+<pre><code>$ cd pca10056/s140/armgcc/
+$ make
+</code></pre><h5 id="flash-with-serial-wire-debug-swd"><em>Flash with Serial Wire Debug (SWD)</em></h5>
+<p>Nordic BLE application requires their proprietary <code>SoftDevices</code>, so let&rsquo;s flash the <code>SoftDevice</code> first.</p>
+<pre><code>$ make flash_softdevice
+</code></pre><p>Now flash the application</p>
+<pre><code>$ make flash
+</code></pre><p>Of course, you can combine the two commands:</p>
+<pre><code>make flash_softdevice &amp;&amp; make flash
+</code></pre><p>Generally, you only need to flash the <code>SoftDevice</code> once for the first time and flash your own application thereafter whenever you want. However, for some reason, occasionally I have to run <code>make flash</code> first before <code>make flash_softdevice</code>.</p>
+<p>If no error occurred, we should now see the advertising LED of the <code>nRF52840 dev board</code> changed from <code>LED4</code> back to <code>LED1</code> again. <strong>Congratulations!</strong></p>
+<h2 id="further-readings">Further readings</h2>
+<p>If you want to use the <code>Nordic SDK</code> but with a different board not from Nordic, you can follow this tutorial at <a href="https://learn.sparkfun.com/tutorials/nrf52840-advanced-development-with-the-nrf5-sdk" title="nRF52840 Advanced Development">SparkFun</a> on how to setup their <a href="https://www.sparkfun.com/products/15025?_ga=2.73485275.812030180.1567090612-1570553210.1565118011" title="SparkFun Pro nRF52840 Mini">SparkFun Pro nRF52840 Mini</a>.</p>
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/nordic/" rel="tag">Nordic</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/ble/" rel="tag">BLE</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/segger/" rel="tag">SEGGER</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/vs-code/" rel="tag">VS Code</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/linux/" rel="tag">Linux</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Lei Shi avatar" src="/img/avatar.png" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name"></span>
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/post/imx8mm-aosp-01/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">iMX8M Mini with AOSP Beginner Part 1</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-serial/">Nordic BLE Serial</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-dfu-02/">Merge Nordic Buttonless DFU with NUS</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-dfu-01/">Nordic BLE Device Firmware Update Bootloader</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/imx8mm-aosp-01/">iMX8M Mini with AOSP Beginner Part 1</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/nordic-ble-01/">Nordic BLE development with SES and VS code in Ubuntu</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/aosp/" title="AOSP">AOSP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ble/" title="BLE">BLE</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dfu/" title="DFU">DFU</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/imx8mm/" title="iMX8MM">iMX8MM</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linux/" title="Linux">Linux</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nordic/" title="Nordic">Nordic</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nus/" title="NUS">NUS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nxp/" title="NXP">NXP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/segger/" title="SEGGER">SEGGER</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/serial/" title="Serial">Serial</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu/" title="Ubuntu">Ubuntu</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/vs-code/" title="VS Code">VS Code</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 Lei&#39;s Blog.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Lei&#39;s Blog</title>
+    <link>/</link>
+    <description>Recent content on Lei&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 09 Oct 2020 00:57:03 -0500</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Nordic BLE Serial</title>
+      <link>/post/nrf52-ble-serial/</link>
+      <pubDate>Fri, 09 Oct 2020 00:57:03 -0500</pubDate>
+      
+      <guid>/post/nrf52-ble-serial/</guid>
+      <description>&lt;p&gt;The &lt;em&gt;nRF Serial Port Library&lt;/em&gt; is &lt;em&gt;designed as a more sophisticated replacement for the app_uart module&lt;/em&gt;, as pointed out at the library&amp;rsquo;s &lt;a href=&#34;https://infocenter.nordicsemi.com/topic/sdk_nrf5_v16.0.0/serial_example.html&#34; title=&#34;serial port libraries&#34;&gt;page&lt;/a&gt;, there are many advantages of this module over app_uart:&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Merge Nordic Buttonless DFU with NUS</title>
+      <link>/post/nrf52-ble-dfu-02/</link>
+      <pubDate>Thu, 08 Oct 2020 19:45:59 -0500</pubDate>
+      
+      <guid>/post/nrf52-ble-dfu-02/</guid>
+      <description>&lt;p&gt;Nordic provides good examples, but mostly independent from each other. To make a BLE UART service with DFU support, we&amp;rsquo;ll need to merge the two examples:&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Nordic BLE Device Firmware Update Bootloader</title>
+      <link>/post/nrf52-ble-dfu-01/</link>
+      <pubDate>Sun, 26 Jul 2020 15:15:35 -0500</pubDate>
+      
+      <guid>/post/nrf52-ble-dfu-01/</guid>
+      <description>&lt;p&gt;Noric provides detailed documentations of &lt;a href=&#34;https://infocenter.nordicsemi.com/topic/sdk_nrf5_v17.0.0/lib_bootloader_dfu_process.html&#34; title=&#34;info_bl_dfu&#34;&gt;Bootloader and DFU modules&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>iMX8M Mini with AOSP Beginner Part 1</title>
+      <link>/post/imx8mm-aosp-01/</link>
+      <pubDate>Tue, 02 Jun 2020 14:14:31 -0500</pubDate>
+      
+      <guid>/post/imx8mm-aosp-01/</guid>
+      <description>&lt;p&gt;I recently got an NXP i.MX 8M Mini EVK board. It has rather powerful Arm Cortex-A53, Cortex-M4, Audio, Voice and Video processors. As a total newbie with no previous experiences on Android Operation System Project (&lt;a href=&#34;https://source.android.com/&#34; title=&#34;AOSP&#34;&gt;AOSP&lt;/a&gt;) or NXP iMX series, this post records my first hands-on.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Nordic BLE development with SES and VS code in Ubuntu</title>
+      <link>/post/nordic-ble-01/</link>
+      <pubDate>Sat, 17 Aug 2019 14:14:31 -0500</pubDate>
+      
+      <guid>/post/nordic-ble-01/</guid>
+      <description>&lt;p&gt;The nRF5 series of Bluetooth low energy chip is a very popular platform from Nordic Semiconductor. Currently there are four &lt;a href=&#34;https://infocenter.nordicsemi.com/topic/ug_getting_started/UG/common/nordic_tools.html&#34; title=&#34;IDE&#34;&gt;IDEs&lt;/a&gt; with compiler supported by Nordic, however, for Linux users there are only two options available: SEGGER Embedded Studio (SES) and GNU/GCC.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

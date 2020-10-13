@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>NXP on Lei&#39;s Blog</title>
+    <link>/tags/nxp/</link>
+    <description>Recent content in NXP on Lei&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 02 Jun 2020 14:14:31 -0500</lastBuildDate><atom:link href="/tags/nxp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>iMX8M Mini with AOSP Beginner Part 1</title>
+      <link>/post/imx8mm-aosp-01/</link>
+      <pubDate>Tue, 02 Jun 2020 14:14:31 -0500</pubDate>
+      
+      <guid>/post/imx8mm-aosp-01/</guid>
+      <description>&lt;p&gt;I recently got an NXP i.MX 8M Mini EVK board. It has rather powerful Arm Cortex-A53, Cortex-M4, Audio, Voice and Video processors. As a total newbie with no previous experiences on Android Operation System Project (&lt;a href=&#34;https://source.android.com/&#34; title=&#34;AOSP&#34;&gt;AOSP&lt;/a&gt;) or NXP iMX series, this post records my first hands-on.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
