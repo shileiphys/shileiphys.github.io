@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Nordic on Lei&#39;s Blog</title>
+    <title>Nordic on NeiNeiHippo</title>
     <link>/tags/nordic/</link>
-    <description>Recent content in Nordic on Lei&#39;s Blog</description>
+    <description>Recent content in Nordic on NeiNeiHippo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 09 Oct 2020 00:57:03 -0500</lastBuildDate><atom:link href="/tags/nordic/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 12 Jan 2021 18:25:00 -0500</lastBuildDate><atom:link href="/tags/nordic/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Nordic NRF52840 Storage Part I</title>
+      <link>/post/nrf52-storage-1/</link>
+      <pubDate>Tue, 12 Jan 2021 18:25:00 -0500</pubDate>
+      
+      <guid>/post/nrf52-storage-1/</guid>
+      <description>&lt;p&gt;There are mainly two ways for persistent storage of data in NRF52840: &lt;strong&gt;flash&lt;/strong&gt; and &lt;strong&gt;UICR&lt;/strong&gt;. I&amp;rsquo;ll be discussing the flash mainly in this &lt;a href=&#34;/post/nrf52-storage-1/&#34;&gt;part I&lt;/a&gt;, and UICR in [part II].&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Nordic BLE Advertising Part I</title>
+      <link>/post/nordic-ble-03/</link>
+      <pubDate>Sat, 26 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/nordic-ble-03/</guid>
+      <description>&lt;p&gt;Nordic has a good tutorial &lt;a href=&#34;https://devzone.nordicsemi.com/nordic/short-range-guides/b/bluetooth-low-energy/posts/ble-advertising-a-beginners-tutorial&#34; title=&#34;adv_tutorial&#34;&gt;Bluetooth low energy Advertising, a beginner&amp;rsquo;s tutorial&lt;/a&gt;,
+which describes basic aspects of advertising. In this post, we will go through some
+of the details.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Nordic BLE Serial</title>
       <link>/post/nrf52-ble-serial/</link>

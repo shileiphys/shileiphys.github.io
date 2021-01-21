@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>NRF52840 on NeiNeiHippo</title>
+    <link>/tags/nrf52840/</link>
+    <description>Recent content in NRF52840 on NeiNeiHippo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 12 Jan 2021 18:25:00 -0500</lastBuildDate><atom:link href="/tags/nrf52840/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Nordic NRF52840 Storage Part I</title>
+      <link>/post/nrf52-storage-1/</link>
+      <pubDate>Tue, 12 Jan 2021 18:25:00 -0500</pubDate>
+      
+      <guid>/post/nrf52-storage-1/</guid>
+      <description>&lt;p&gt;There are mainly two ways for persistent storage of data in NRF52840: &lt;strong&gt;flash&lt;/strong&gt; and &lt;strong&gt;UICR&lt;/strong&gt;. I&amp;rsquo;ll be discussing the flash mainly in this &lt;a href=&#34;/post/nrf52-storage-1/&#34;&gt;part I&lt;/a&gt;, and UICR in [part II].&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

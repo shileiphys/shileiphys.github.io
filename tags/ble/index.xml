@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>BLE on Lei&#39;s Blog</title>
+    <title>BLE on NeiNeiHippo</title>
     <link>/tags/ble/</link>
-    <description>Recent content in BLE on Lei&#39;s Blog</description>
+    <description>Recent content in BLE on NeiNeiHippo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 09 Oct 2020 00:57:03 -0500</lastBuildDate><atom:link href="/tags/ble/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 26 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="/tags/ble/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Nordic BLE Advertising Part I</title>
+      <link>/post/nordic-ble-03/</link>
+      <pubDate>Sat, 26 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/nordic-ble-03/</guid>
+      <description>&lt;p&gt;Nordic has a good tutorial &lt;a href=&#34;https://devzone.nordicsemi.com/nordic/short-range-guides/b/bluetooth-low-energy/posts/ble-advertising-a-beginners-tutorial&#34; title=&#34;adv_tutorial&#34;&gt;Bluetooth low energy Advertising, a beginner&amp;rsquo;s tutorial&lt;/a&gt;,
+which describes basic aspects of advertising. In this post, we will go through some
+of the details.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Nordic BLE Serial</title>
       <link>/post/nrf52-ble-serial/</link>

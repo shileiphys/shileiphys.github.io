@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Merge Nordic Buttonless DFU with NUS - Lei&#39;s Blog</title>
+	<title>Merge Nordic Buttonless DFU with NUS - NeiNeiHippo</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 		<meta property="og:title" content="Merge Nordic Buttonless DFU with NUS" />
@@ -31,9 +31,9 @@
 	<div class="container header__container">
 		
 	<div class="logo">
-		<a class="logo__link" href="/" title="Lei&#39;s Blog" rel="home">
+		<a class="logo__link" href="/" title="NeiNeiHippo" rel="home">
 			<div class="logo__item logo__text">
-					<div class="logo__title">Lei&#39;s Blog</div>
+					<div class="logo__title">NeiNeiHippo</div>
 					<div class="logo__tagline">Just another site</div>
 				</div>
 		</a>
@@ -438,6 +438,14 @@ NRF_SDH_STATE_OBSERVER(m_buttonless_dfu_state_obs, 0)</p>
 ble Buttonless DFU   nrf_sdh_disable_request();</p>
 <h2 id="36-nrf_error_no_mem-error">3.6 <em>NRF_ERROR_NO_MEM</em> error</h2>
 <p>See link <a href="https://devzone.nordicsemi.com/f/nordic-q-a/51947/how-to-resolve-the-error-nrf_error_no_mem-at-the-case-app_uart_communication_error-in-uart_event_handle">here</a> and <a href="https://devzone.nordicsemi.com/f/nordic-q-a/45438/app_uart_communication_error-on-nrf52832/178769#178769">here</a>.</p>
+<h2 id="38-customized-uuid-advertised-incorrectly">3.8 Customized UUID advertised incorrectly</h2>
+<p>SoftDevice needs to know where the customized UUID started, by <a href="https://devzone.nordicsemi.com/f/nordic-q-a/53123/custom-128bit-uuid-is-advertised-incorrectly/215095#215095">setting</a> <strong>BLE_UUID_TYPE_VENDOR_BEGIN</strong> correctly corresponding to the service initialized in <strong>services_init()</strong>, e.g, if the customized service initialized after a special one, then</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">static</span> ble_uuid_t m_adv_uuids[] <span style="color:#f92672">=</span>
+{
+    {BLE_UUID_NUS_SERVICE, NUS_SERVICE_UUID_TYPE <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>},
+    {BLE_UUID_DEVICE_INFORMATION_SERVICE, BLE_UUID_TYPE_BLE}
+};
+</code></pre></div><p>The first UUID in the <strong>m_adv_uuids</strong> array will be advertised service.</p>
 <h2 id="37-others">3.7 Others:</h2>
 <ul>
 <li><a href="https://devzone.nordicsemi.com/f/nordic-q-a/63330/buttonless-ota-hanging/259984#259984">Buttonless OTA Hanging</a></li>
@@ -498,7 +506,7 @@ ble Buttonless DFU   nrf_sdh_disable_request();</p>
 			<aside class="sidebar"><div class="widget-search widget">
 	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
 		<label>
-			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
 		</label>
 		<input class="widget-search__submit" type="submit" value="Search">
 		<input type="hidden" name="sitesearch" value="/" />
@@ -508,11 +516,11 @@ ble Buttonless DFU   nrf_sdh_disable_request();</p>
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/nrf52-storage-1/">Nordic NRF52840 Storage Part I</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/nordic-ble-03/">Nordic BLE Advertising Part I</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-serial/">Nordic BLE Serial</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-dfu-02/">Merge Nordic Buttonless DFU with NUS</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-dfu-01/">Nordic BLE Device Firmware Update Bootloader</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/imx8mm-aosp-01/">iMX8M Mini with AOSP Beginner Part 1</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/nordic-ble-01/">Nordic BLE development with SES and VS code in Ubuntu</a></li>
 		</ul>
 	</div>
 </div>
@@ -522,13 +530,16 @@ ble Buttonless DFU   nrf_sdh_disable_request();</p>
 		<a class="widget-taglist__link widget__link btn" href="/tags/aosp/" title="AOSP">AOSP</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/ble/" title="BLE">BLE</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/dfu/" title="DFU">DFU</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/flash/" title="Flash">Flash</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/imx8mm/" title="iMX8MM">iMX8MM</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/linux/" title="Linux">Linux</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/nordic/" title="Nordic">Nordic</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nrf52840/" title="NRF52840">NRF52840</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/nus/" title="NUS">NUS</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/nxp/" title="NXP">NXP</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/segger/" title="SEGGER">SEGGER</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/serial/" title="Serial">Serial</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/storage/" title="Storage">Storage</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu/" title="Ubuntu">Ubuntu</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vs-code/" title="VS Code">VS Code</a>
 	</div>
@@ -539,7 +550,7 @@ ble Buttonless DFU   nrf_sdh_disable_request();</p>
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2020 Lei&#39;s Blog.
+			&copy; 2021 NeiNeiHippo.
 			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
 		</div>
 	</div>

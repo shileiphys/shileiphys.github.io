@@ -4,14 +4,14 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>DFU - NeiNeiHippo</title>
+	<title>Storage - NeiNeiHippo</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
-		<meta property="og:title" content="DFU" />
+		<meta property="og:title" content="Storage" />
 <meta property="og:description" content="Lei&#39;s Personal blog about everything" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="/tags/dfu/" />
-<meta property="og:updated_time" content="2020-10-08T19:45:59-05:00" />
+<meta property="og:url" content="/tags/storage/" />
+<meta property="og:updated_time" content="2021-01-12T18:25:00-05:00" />
 
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -20,7 +20,7 @@
 
 	<link rel="stylesheet" href="/css/style.css">
 	
-	<link rel="alternate" type="application/rss+xml" href="/tags/dfu/index.xml" title="NeiNeiHippo">
+	<link rel="alternate" type="application/rss+xml" href="/tags/storage/index.xml" title="NeiNeiHippo">
 
 	<link rel="shortcut icon" href="/favicon.ico">
 		
@@ -61,34 +61,20 @@
 			
 <main class="main list" role="main">
 	<header class="main__header">
-		<h1 class="main__title">DFU</h1>
+		<h1 class="main__title">Storage</h1>
 	</header><article class="list__item post">
 	<header class="list__header">
 		<h2 class="list__title post__title">
-			<a href="/post/nrf52-ble-dfu-02/" rel="bookmark">
-			Merge Nordic Buttonless DFU with NUS
+			<a href="/post/nrf52-storage-1/" rel="bookmark">
+			Nordic NRF52840 Storage Part I
 			</a>
 		</h2>
 		<div class="list__meta meta">
 <div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-10-08T19:45:59-05:00">October 08, 2020</time></div></div>
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2021-01-12T18:25:00-05:00">January 12, 2021</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		<p>Nordic provides good examples, but mostly independent from each other. To make a BLE UART service with DFU support, we&rsquo;ll need to merge the two examples:</p>
-	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h2 class="list__title post__title">
-			<a href="/post/nrf52-ble-dfu-01/" rel="bookmark">
-			Nordic BLE Device Firmware Update Bootloader
-			</a>
-		</h2>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-07-26T15:15:35-05:00">July 26, 2020</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		<p>Noric provides detailed documentations of <a href="https://infocenter.nordicsemi.com/topic/sdk_nrf5_v17.0.0/lib_bootloader_dfu_process.html" title="info_bl_dfu">Bootloader and DFU modules</a></p>
+		<p>There are mainly two ways for persistent storage of data in NRF52840: <strong>flash</strong> and <strong>UICR</strong>. I&rsquo;ll be discussing the flash mainly in this <a href="/post/nrf52-storage-1/">part I</a>, and UICR in [part II].</p>
 	</div>
 </article>
 </main>

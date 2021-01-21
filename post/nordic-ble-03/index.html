@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Nordic BLE Advertising Part I - NeiNeiHippo</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="Nordic BLE Advertising Part I" />
+<meta property="og:description" content="Nordic has a good tutorial Bluetooth low energy Advertising, a beginner&rsquo;s tutorial,
+which describes basic aspects of advertising. In this post, we will go through some
+of the details." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/nordic-ble-03/" />
+<meta property="article:published_time" content="2020-12-26T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-12-26T00:00:00+00:00" />
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo">
+		<a class="logo__link" href="/" title="NeiNeiHippo" rel="home">
+			<div class="logo__item logo__text">
+					<div class="logo__title">NeiNeiHippo</div>
+					<div class="logo__tagline">Just another site</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">Home</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Nordic BLE Advertising Part I</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-12-26T00:00:00Z">December 26, 2020</time></div></div>
+		</header><div class="content post__content clearfix">
+			<p>Nordic has a good tutorial <a href="https://devzone.nordicsemi.com/nordic/short-range-guides/b/bluetooth-low-energy/posts/ble-advertising-a-beginners-tutorial" title="adv_tutorial">Bluetooth low energy Advertising, a beginner&rsquo;s tutorial</a>,
+which describes basic aspects of advertising. In this post, we will go through some
+of the details.</p>
+<h1 id="device-name">Device Name</h1>
+<p>In every Nordic example, the device name is a defined by <code>define DEVICE_NAME</code> in
+the code. There has been many posts (<a href="https://devzone.nordicsemi.com/f/nordic-q-a/35942/device-name-change" title="change name 1">here</a>) about how to change the device name.
+However, the simplest I found was using the <em><strong>advertising module</strong></em> from this <a href="https://devzone.nordicsemi.com/f/nordic-q-a/69066/change-advertised-name-bluetooth" title="device name">post</a>,
+only two steps:</p>
+<ol>
+<li>Set the new device name with <code>sd_ble_gap_device_name_set()</code>,</li>
+<li>Call <code>ble_advertising_advdata_update()</code> to update the name part of the advertising packet.</li>
+</ol>
+<p>The write permissions are set to the variable <a href="https://devzone.nordicsemi.com/f/nordic-q-a/14610/how-can-i-change-the-write-read-permission-of-uuid-2a00/" title="change name 4">sec_mode</a> using the
+<code>BLE_GAP_CONN_SEC_MODE_SET_OPEN()</code> macro. You many want to <a href="https://devzone.nordicsemi.com/f/nordic-q-a/59433/how-to-change-the-device-name-dynamically/241548#241548" title="change name 3">stop</a> advertising
+first to be safe, however, I have found that there&rsquo;s no issue to just do it with
+stop/restart. To make it even simpler, let <em><strong>advdata</strong></em> and <em><strong>srdata</strong></em> be global
+variable, so you can update it anywhere including inside <code>advertising_init()</code> and
+don&rsquo;t need to rebuild either data structure. There are, however, <a href="https://devzone.nordicsemi.com/f/nordic-q-a/25192/device-length-about-sd_ble_gap_device_name_set" title="name max length">limitations</a>
+on the length of the device name.</p>
+<h1 id="tx-power">TX Power</h1>
+<p>There are <a href="https://devzone.nordicsemi.com/f/nordic-q-a/46230/change-beacon-advertising-parameters-while-button-pressed">two aspects</a> of TX power, one is for advertising to show TX power
+value, the other is to change the TX radio power. Though they are aligned in most
+cases, they have to be set individually.</p>
+<p>To <strong>set advertising TX power</strong>, set <code>m_advdata.p_tx_power_level = &amp;m_tx_power</code> in
+<code>advertising_init()</code> or anywhere you wish to change. If it&rsquo;s not in initialization,
+then call <code>ble_advertising_advdata_update()</code> again so it will appear in the
+advertising packet. It comes handy if you already set <em><strong>advdata</strong></em> to global so
+the internal buffer is there to be easily modified.</p>
+<p>To <strong>set TX power of the radio</strong>, call <code>sd_ble_gap_tx_power_set</code> function with a handle as described in this <a href="https://devzone.nordicsemi.com/f/nordic-q-a/36531/how-do-you-set-tx-power-for-all-power-roles/141008#141008" title="TX_Power_Handle">post</a>:</p>
+<ol>
+<li>For advertising <strong>BLE_GAP_TX_POWER_ROLE_ADV</strong>, call <code>advertising_int()</code> first, so the <code>adv_handle</code> is not empty:</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C">sd_ble_gap_tx_power_set(BLE_GAP_TX_POWER_ROLE_ADV, m_advertising.adv_handle, level);
+</code></pre></div><ol start="2">
+<li>For scanning <strong>BLE_GAP_TX_POWER_ROLE_SCAN_INIT</strong>, the connection handle is ignored:</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C">sd_ble_gap_tx_power_set(BLE_GAP_TX_POWER_ROLE_ADV, BLE_CONN_HANDLE_INVALID, level);
+</code></pre></div><ol start="3">
+<li>For connection <strong>BLE_GAP_TX_POWER_ROLE_CONN</strong>, use the specific connection handle from the connected event, which
+can be found in <code>on_ble_evt()</code> function.</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C">sd_ble_gap_tx_power_set(BLE_GAP_TX_POWER_ROLE_ADV, p_ble_evt<span style="color:#f92672">-&gt;</span>evt.gap_evt.conn_handle, level);
+</code></pre></div><p>If nothing changed when a connection is established, the TX power during connection will <a href="https://devzone.nordicsemi.com/f/nordic-q-a/54562/location-to-set-tx-power-in-advertisement-and-connection-mode-also-change-them-dynamically-at-runtime/" title="tx_power inheritance">inherit</a> the power used in advertising or scanning.</p>
+<h1 id="uuid">UUID</h1>
+<p>In the <a href="https://devzone.nordicsemi.com/nordic/short-range-guides/b/bluetooth-low-energy/posts/ble-services-a-beginners-tutorial" title="service_tutorial">service tutorial</a> there&rsquo;s a good section about the <strong>Universally Unique Identifier</strong> (UUID). There are two types, a short 16-bit Bluetooth SIG predefined UUID and a 128-bit vendor specific UUID for custom services and characteristics. One way to create a custom one is to use a random <a href="https://www.uuidgenerator.net/" title="UUID generator">generator</a>. In Nordic SDK, these <a href="https://devzone.nordicsemi.com/f/nordic-q-a/50557/different-between-ble_uuid_type_ble-and-ble_uuid_type_vendor_begin" title="UUID type difference">two types</a> are <strong>BLE_UUID_TYPE_BLE</strong> and <strong>BLE_UUID_TYPE_VENDOR_BEGIN</strong>.</p>
+<p>You can add <a href="https://devzone.nordicsemi.com/f/nordic-q-a/64049/advertising-multiple-services" title="advertising-multiple-services">multiple services</a> in the <code>services_init()</code> method, we can also
+include one (so that other services can be discovered once connected) or multiple
+UUIDs (predefined or <a href="https://devzone.nordicsemi.com/f/nordic-q-a/16158/advertise-multiple-vendor-uuids">vendor specific</a>) in the advertising packet. One thing
+to pay attention to is the <a href="https://devzone.nordicsemi.com/f/nordic-q-a/19861/how-to-set-service-uuid-for-central-and-peripheral">order</a> they&rsquo;ve been added, otherwise the advertising
+services may get mixed up (see <a href="https://devzone.nordicsemi.com/f/nordic-q-a/45931/adding-buttonless-dfu-service-to-my-app-changes-the-base-uuid-of-my-service-in-the-advertisement-packet" title="UUID mixed">here</a> and <a href="https://devzone.nordicsemi.com/f/nordic-q-a/53123/custom-128bit-uuid-is-advertised-incorrectly" title="UUID mixed 2">here</a>).</p>
+<p>Inside the function <code>services_init()</code>, each service initialized and added to the
+stack by <code>sd_ble_uuid_vs_add()</code>, which normally resides in each service file. Then,
+the <code>main</code> calls the <code>advertising_init()</code> to add each service UUIDs to the advertising
+packet. For the advertised UUIDs correspond to the actual services, you have to
+make sure each UUID points to the right sercie in the stack, e.g., if you have three
+services DFU, our_service, and NUS initialized in this order in <code>services_init()</code>,
+you will need to specify them correspondingly:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">static</span> ble_uuid_t m_adv_uuids[] <span style="color:#f92672">=</span>
+{
+  {BLE_UUID_OUR_SERVICE, BLE_UUID_TYPE_VENDOR_BEGIN<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>},
+  {BLE_UUID_NUS_SERVICE, BLE_UUID_TYPE_VENDOR_BEGIN<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>},
+  {BLE_UUID_DEVICE_INFORMATION_SERVICE, BLE_UUID_TYPE_BLE}
+};
+</code></pre></div><p>The <strong>TYPE</strong> is to tell if it&rsquo;s a predefined or a vendor specific UUID, but they
+all point to the first base UUID. In this case the first one is DFU, the second is
+<strong>OUR_SERVICE</strong> and the third is <strong>NUS_SERVICE</strong>, thus <code>BLE_UUID_TYPE_VENDOR_BEGIN+1</code>
+and <code>BLE_UUID_TYPE_VENDOR_BEGIN+2</code> respectively.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/nordic/" rel="tag">Nordic</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/ble/" rel="tag">BLE</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Lei Shi avatar" src="/img/avatar.png" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name"></span>
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/nrf52-ble-serial/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">Nordic BLE Serial</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/post/nrf52-storage-1/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">Nordic NRF52840 Storage Part I</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/nrf52-storage-1/">Nordic NRF52840 Storage Part I</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/nordic-ble-03/">Nordic BLE Advertising Part I</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-serial/">Nordic BLE Serial</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-dfu-02/">Merge Nordic Buttonless DFU with NUS</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-dfu-01/">Nordic BLE Device Firmware Update Bootloader</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/aosp/" title="AOSP">AOSP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ble/" title="BLE">BLE</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dfu/" title="DFU">DFU</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/flash/" title="Flash">Flash</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/imx8mm/" title="iMX8MM">iMX8MM</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linux/" title="Linux">Linux</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nordic/" title="Nordic">Nordic</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nrf52840/" title="NRF52840">NRF52840</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nus/" title="NUS">NUS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nxp/" title="NXP">NXP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/segger/" title="SEGGER">SEGGER</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/serial/" title="Serial">Serial</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/storage/" title="Storage">Storage</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu/" title="Ubuntu">Ubuntu</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/vs-code/" title="VS Code">VS Code</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 NeiNeiHippo.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

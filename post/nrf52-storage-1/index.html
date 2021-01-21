@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Nordic NRF52840 Storage Part I - NeiNeiHippo</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="Nordic NRF52840 Storage Part I" />
+<meta property="og:description" content="There are mainly two ways for persistent storage of data in NRF52840: flash and UICR. I&rsquo;ll be discussing the flash mainly in this part I, and UICR in [part II]." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/nrf52-storage-1/" />
+<meta property="article:published_time" content="2021-01-12T18:25:00-05:00" />
+<meta property="article:modified_time" content="2021-01-12T18:25:00-05:00" />
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo">
+		<a class="logo__link" href="/" title="NeiNeiHippo" rel="home">
+			<div class="logo__item logo__text">
+					<div class="logo__title">NeiNeiHippo</div>
+					<div class="logo__tagline">Just another site</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">Home</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Nordic NRF52840 Storage Part I</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2021-01-12T18:25:00-05:00">January 12, 2021</time></div></div>
+		</header><div class="content post__content clearfix">
+			<p>There are mainly two ways for persistent storage of data in NRF52840: <strong>flash</strong> and <strong>UICR</strong>. I&rsquo;ll be discussing the flash mainly in this <a href="/post/nrf52-storage-1/">part I</a>, and UICR in [part II].</p>
+<h1 id="1-flash-memory">1. Flash Memory</h1>
+<p>Nordic SDK provides two libraries to handle flash memory storage, <a href="https://infocenter.nordicsemi.com/topic/sdk_nrf5_v16.0.0/lib_fstorage.html" title="lib_fstorage">fstorage</a> module and <a href="https://infocenter.nordicsemi.com/topic/sdk_nrf5_v16.0.0/lib_fds.html" title="lib_fds">FDS</a> module. They were experimental, but now a part of validated libraries in SDK 17.</p>
+<p>The Flash Data Storage (FDS) module is more higher level mini file system. It uses the Flash Storage (fstorage) as backend to write to flash. SoftDevice is required to execute the write.</p>
+<blockquote>
+<p>The module has been designed to provide the following benefits:</p>
+</blockquote>
+<ul>
+<li>Minimizing the risk of accessing corrupted data by constant validation: In case of power loss, data might be written incompletely. Validation ensures that FDS recognizes invalid data and never returns corrupted data to the user.</li>
+<li>Offering (optional) CRC verification when opening a record to ensure that data has not changed since it was written.</li>
+<li>Minimizing flash operations (updating and deleting): Instead of deleting full pages, FDS stores copies of new data and invalidates outdated data by a single word write.</li>
+<li>Basic wear leveling: Sequential writes and garbage collection provide for an even level of flash usage.</li>
+<li>Making it easy to access data without copying it, which makes the impact of accessing data independent of the size of the data.
+Minimizing memory usage by allowing for flexible data size.</li>
+<li>Impose no restrictions on the content of the data (which means that it can contain special characters).</li>
+</ul>
+<p>With FDS, you will treat data as record and files, which is much clean and easy to handle. FDS will make sure of an even flash wear distribution but come with more <a href="https://devzone.nordicsemi.com/f/nordic-q-a/55680/storing-data-to-flash-memory" title="overhead">overhead</a> of each record writing. Only FDS will be discussed here.</p>
+<h1 id="2-storage-format">2. Storage Format</h1>
+<p>FDS stores data as <a href="https://infocenter.nordicsemi.com/topic/sdk_nrf5_v16.0.0/lib_fds_format.html" title="record_format">records</a>, which has a header and a content.
+<img src="/images/record_format.png" alt="record"></p>
+<p>Every record is identified by a key and a file ID it is assigned to, however, we need to understand:</p>
+<blockquote>
+<p>Files are groups of records. Neither record keys nor file IDs must be unique, and files can contain several records with the same key. Records can be accessed through any combination of file ID and record Key.</p>
+<p>For example, an application could use the following two files:</p>
+<ul>
+<li>File 1 with two records: 0x1111=&ldquo;Phone1&rdquo;, 0x2222=&ldquo;data: 12345&rdquo;</li>
+<li>File 2 with three records: 0x1111=&ldquo;Tablet1&rdquo;, 0x2222=&ldquo;data: abcdef&rdquo;, 0x2222=&ldquo;data: 67890&rdquo;</li>
+</ul>
+<p>You could then iterate, for example, through all records in file 1, through all records with key 0x1111, or through all records with key 0x2222 in file 2.</p>
+<p>Restrictions on keys and IDs:</p>
+<ul>
+<li>Record keys should be in the range 0x0001 - 0xBFFF.</li>
+<li>File IDs should be in the range 0x0000 - 0xBFFF.</li>
+</ul>
+</blockquote>
+<p>The sole unique identifier is the <em>Record ID</em>, but is not assigned nor can it be manipulated by user. All of these may sound confusing which it is (see post <a href="https://devzone.nordicsemi.com/f/nordic-q-a/35843/flash-data-storage-fds-what-is-the-point-of-files-and-records">here</a> and <a href="https://devzone.nordicsemi.com/f/nordic-q-a/47587/difference-between-fds-record-key-and-record-id">here</a>). The way to make sense of it is: records are the only physical structure of data stored, thus require an unique identifier, AKA <em>record ID</em>, while files are just some abstract collections.</p>
+<p>You may very well have many same record keys or file IDs, but I would recommend treat them as keys in database records, so you can link the same key to different tables/files to make life easier.</p>
+<p>The other important configuration is virtual page. The total amount of flash memory for use depends on the size (<strong>FDS_VIRTUAL_PAGE_SIZE</strong>) and number of virtual pages (<strong>FDS_VIRTUAL_PAGES</strong>). By default, a virtual page is the same size as a physical page. One of the virtual page is reserved by the system for garbage collection, and this <a href="https://devzone.nordicsemi.com/f/nordic-q-a/60073/how-to-calculate-flash-life-by-garbage-collection" title="page_swap">post</a> discussed some of underlining mechanism of page swapping during the garbage collection. Details of configuration options for the FDS can be found <a href="https://infocenter.nordicsemi.com/topic/sdk_nrf5_v16.0.0/lib_fds_functionality.html" title="functionality">here</a>.</p>
+<h1 id="3-usage">3. Usage</h1>
+<p>Before read and write with FDS, it is <strong>required</strong> to:</p>
+<ol>
+<li>Make sure the SoftDevice is initialized,</li>
+<li>Register a FDS callback event handler with <code>fds_register()</code></li>
+<li>Call <code>fds_init()</code> to initialize the module.</li>
+</ol>
+<p>ALL FDS operations are asynchronous, completion of the operation is reported through the even handler. The return code from the operation, e.g. read/write, only tells weather the operation is successfully queued. Examples can be found <a href="https://infocenter.nordicsemi.com/topic/sdk_nrf5_v16.0.0/lib_fds_usage.html" title="usage">here</a>.</p>
+<h3 id="writing-records">Writing records</h3>
+<p>Use <code>fds_record_write()</code> to write a new record, there&rsquo;s also a function <code>fds_record_update()</code> to update a record. To be clear, both of them of create a new record to write to the flash, the difference is <strong>updating</strong> invalidates the old one afterwards. This (as well as deleting) is designed so to run garbage as few as possible to prolong the life of the flash.</p>
+<h3 id="reading-records">Reading Records</h3>
+<p>First use <code>fds_record_find()</code> to search for the record. This return one match <strong>record descriptor</strong> at a time. Then using the found descriptor, you can read with <code>fds_record_open()</code> and close afterwards with <code>fds_record_close()</code>.</p>
+<blockquote>
+<p>Closing a record with <code>fds_record_close</code> will not invalidate the record <code>descriptor</code> or the <code>fds_flash_record_t</code> structure. However, the data pointed to by the fds_flash_record_t structure might change at any time after the record is closed. So if you need to access the data after closing the record, you must open it again.</p>
+</blockquote>
+<h3 id="deleting-records">Deleting Records</h3>
+<p>With the descriptor returned by previous call of record operations, use <code>fds_record_delete()</code> to delete a record. As with <strong>updating</strong> this call does not physically delete a record, but rather invalidates it so it can not be opened/read/write anymore. You must run garbage collection to free the space used by the invalidated records.</p>
+<h3 id="garbage-collection">Garbage Collection</h3>
+<p>As stated previously, in order to reclaim flash space occupied by invalidated records either from deleting or updating, you&rsquo;ll need to call garbage collection method <code>fds_gc()</code>. This function won&rsquo;t be run automatically by FDS, instead, must be stated by the application, as detailed in the <a href="https://infocenter.nordicsemi.com/topic/sdk_nrf5_v16.0.0/lib_fds_functionality.html" title="functionality">library</a>:</p>
+<blockquote>
+<p>It is better to run garbage collection when necessary, i.e., when the space in flash is (nearly) full. When the space is exhausted, write requests return the error <code>FDS_ERR_NO_SPACE_IN_FLASH</code>, and you must run garbage collection and wait for completion before repeating the call to the write function &hellip;</p>
+</blockquote>
+<p>You can also design your own event (like <a href="https://devzone.nordicsemi.com/f/nordic-q-a/47084/detect-almost-full-fds-to-perform-garbage-collection" title="almost_full">this</a> post) to trigger the garbage collection, particularly with the help of function <code>fds_stat()</code>, which retrieves useful file system information such as <strong>dirty_records</strong>, <strong>words_used</strong>, <strong>freeable_words</strong>, and <strong>corruption</strong>.</p>
+<p>One thing to pay attention to is trying to run &ldquo;garbage collection when BLE activity is low otherwise the operation might timeout&rdquo;.</p>
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/nordic/" rel="tag">Nordic</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/nrf52840/" rel="tag">NRF52840</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/storage/" rel="tag">Storage</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/flash/" rel="tag">Flash</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Lei Shi avatar" src="/img/avatar.png" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name"></span>
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/nordic-ble-03/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">Nordic BLE Advertising Part I</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/nrf52-storage-1/">Nordic NRF52840 Storage Part I</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/nordic-ble-03/">Nordic BLE Advertising Part I</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-serial/">Nordic BLE Serial</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-dfu-02/">Merge Nordic Buttonless DFU with NUS</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-dfu-01/">Nordic BLE Device Firmware Update Bootloader</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/aosp/" title="AOSP">AOSP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ble/" title="BLE">BLE</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dfu/" title="DFU">DFU</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/flash/" title="Flash">Flash</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/imx8mm/" title="iMX8MM">iMX8MM</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linux/" title="Linux">Linux</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nordic/" title="Nordic">Nordic</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nrf52840/" title="NRF52840">NRF52840</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nus/" title="NUS">NUS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nxp/" title="NXP">NXP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/segger/" title="SEGGER">SEGGER</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/serial/" title="Serial">Serial</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/storage/" title="Storage">Storage</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu/" title="Ubuntu">Ubuntu</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/vs-code/" title="VS Code">VS Code</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 NeiNeiHippo.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

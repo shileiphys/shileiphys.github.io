@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Nordic BLE Serial - Lei&#39;s Blog</title>
+	<title>Nordic BLE Serial - NeiNeiHippo</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 		<meta property="og:title" content="Nordic BLE Serial" />
@@ -31,9 +31,9 @@
 	<div class="container header__container">
 		
 	<div class="logo">
-		<a class="logo__link" href="/" title="Lei&#39;s Blog" rel="home">
+		<a class="logo__link" href="/" title="NeiNeiHippo" rel="home">
 			<div class="logo__item logo__text">
-					<div class="logo__title">Lei&#39;s Blog</div>
+					<div class="logo__title">NeiNeiHippo</div>
 					<div class="logo__tagline">Just another site</div>
 				</div>
 		</a>
@@ -88,10 +88,7 @@
 </ul>
 <p>Note that <em><strong>Interrupt mode. API can be set to work in synchronous or asynchronous mode</strong></em>, further read you will see:</p>
 <blockquote>
-<p>Warning</p>
-</blockquote>
-<blockquote>
-<p>Do not use synchronous API (timeout_ms parameter &gt; 0) in IRQ context. It may lead to a deadlock because the timeout interrupt cannot preempt the current IRQ context.</p>
+<p>Warning: Do not use synchronous API (timeout_ms parameter &gt; 0) in IRQ context. It may lead to a deadlock because the timeout interrupt cannot preempt the current IRQ context.</p>
 </blockquote>
 <p>The two serial examples have mixed use of synchronous and asynchronous. It is my experiences that it is better to only use <em>synchronous</em> mode with <strong>Polling</strong>, especially when in BLE applications, and <em>asynchronous</em> mode with <strong>IRQ/DMA</strong> and implementing <strong>event handler</strong>.</p>
 <h2 id="11-polling-mode">1.1 Polling Mode</h2>
@@ -192,7 +189,16 @@ NRF_SERIAL_UART_DEF(serial0_uarte, 0);
 <p>how often the event handler is called depends on the size of the buffers set using NRF_SERIAL_BUFFERS_DEF. These buffers are used for transfers, and the size will determine the smallest slices of data that can be transfered in a single UART driver - legacy layer driver request. Increasing the buffer size should give you fever calls of the handler.</p>
 </blockquote>
 <p>Another important thing is try not to use <code>for-loop</code> and <code>nrf_delay</code> to either <code>nrf_serial_write</code> or <code>nrf_serial_read</code> the serial port. This may cause buffer being overrun and missing events. Use <code>app_timer</code> in case of constant delay time.</p>
-<h1 id="3-other-qas">3 Other Q/As</h1>
+<h1 id="3-serialuart-module-power-consumption">3 Serial/UART Module Power Consumption</h1>
+<p>Serial/UART peripheral uses a lot of power, e.g., ~ <a href="https://devzone.nordicsemi.com/f/nordic-q-a/67380/how-to-achieve-low-current-consumption-with-nrf52840" title="serial power">1mA</a> in idle with EasyDMA mode. So it is critical to turn it off when not using it. Due to a bug in nRF52840 that persists within the SDK, you&rsquo;ll need to first uninitialize and then power cycle the it.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C">err_code <span style="color:#f92672">=</span> nrf_serial_uninit(<span style="color:#f92672">&amp;</span>serial0_uarte);
+APP_ERROR_CHECK(err_code);
+<span style="color:#f92672">*</span>(<span style="color:#66d9ef">volatile</span> uint32_t<span style="color:#f92672">*</span>)<span style="color:#ae81ff">0x40002FFC</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+__DSB();
+<span style="color:#f92672">*</span>(<span style="color:#66d9ef">volatile</span> uint32_t<span style="color:#f92672">*</span>)<span style="color:#ae81ff">0x40002FFC</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+__DSB();
+</code></pre></div><p>Details can be found in many posts such as <a href="https://devzone.nordicsemi.com/f/nordic-q-a/26030/how-to-reach-nrf52840-uarte-current-supply-specification/102605#102605">here</a> and <a href="https://devzone.nordicsemi.com/f/nordic-q-a/59407/simple-question-about-the-peripheral-reset-code">here</a>.</p>
+<h1 id="4-other-qas">4 Other Q/As</h1>
 <ul>
 <li><a href="https://devzone.nordicsemi.com/f/nordic-q-a/54344/getting-lots-of-noise-errors-using-serial-library/220731#220731" title="noise/errors">Getting lots of noise/errors using Serial library</a></li>
 <li><a href="https://devzone.nordicsemi.com/f/nordic-q-a/25173/nrf52840-uart1-not-working-in-sdk-14/126390#126390">NRF52840 UART1 not working in SDK 14</a></li>
@@ -236,6 +242,12 @@ NRF_SERIAL_UART_DEF(serial0_uarte, 0);
 			<p class="pager__title">Merge Nordic Buttonless DFU with NUS</p>
 		</a>
 	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/post/nordic-ble-03/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">Nordic BLE Advertising Part I</p>
+		</a>
+	</div>
 </nav>
 
 
@@ -243,7 +255,7 @@ NRF_SERIAL_UART_DEF(serial0_uarte, 0);
 			<aside class="sidebar"><div class="widget-search widget">
 	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
 		<label>
-			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
 		</label>
 		<input class="widget-search__submit" type="submit" value="Search">
 		<input type="hidden" name="sitesearch" value="/" />
@@ -253,11 +265,11 @@ NRF_SERIAL_UART_DEF(serial0_uarte, 0);
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/nrf52-storage-1/">Nordic NRF52840 Storage Part I</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/nordic-ble-03/">Nordic BLE Advertising Part I</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-serial/">Nordic BLE Serial</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-dfu-02/">Merge Nordic Buttonless DFU with NUS</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-dfu-01/">Nordic BLE Device Firmware Update Bootloader</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/imx8mm-aosp-01/">iMX8M Mini with AOSP Beginner Part 1</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/nordic-ble-01/">Nordic BLE development with SES and VS code in Ubuntu</a></li>
 		</ul>
 	</div>
 </div>
@@ -267,13 +279,16 @@ NRF_SERIAL_UART_DEF(serial0_uarte, 0);
 		<a class="widget-taglist__link widget__link btn" href="/tags/aosp/" title="AOSP">AOSP</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/ble/" title="BLE">BLE</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/dfu/" title="DFU">DFU</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/flash/" title="Flash">Flash</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/imx8mm/" title="iMX8MM">iMX8MM</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/linux/" title="Linux">Linux</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/nordic/" title="Nordic">Nordic</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nrf52840/" title="NRF52840">NRF52840</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/nus/" title="NUS">NUS</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/nxp/" title="NXP">NXP</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/segger/" title="SEGGER">SEGGER</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/serial/" title="Serial">Serial</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/storage/" title="Storage">Storage</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu/" title="Ubuntu">Ubuntu</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vs-code/" title="VS Code">VS Code</a>
 	</div>
@@ -284,7 +299,7 @@ NRF_SERIAL_UART_DEF(serial0_uarte, 0);
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2020 Lei&#39;s Blog.
+			&copy; 2021 NeiNeiHippo.
 			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
 		</div>
 	</div>

@@ -1,27 +1,54 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on Lei&#39;s Blog</title>
+    <title>Tags on NeiNeiHippo</title>
     <link>/tags/</link>
-    <description>Recent content in Tags on Lei&#39;s Blog</description>
+    <description>Recent content in Tags on NeiNeiHippo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 09 Oct 2020 00:57:03 -0500</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 12 Jan 2021 18:25:00 -0500</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>BLE</title>
-      <link>/tags/ble/</link>
-      <pubDate>Fri, 09 Oct 2020 00:57:03 -0500</pubDate>
+      <title>Flash</title>
+      <link>/tags/flash/</link>
+      <pubDate>Tue, 12 Jan 2021 18:25:00 -0500</pubDate>
       
-      <guid>/tags/ble/</guid>
+      <guid>/tags/flash/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Nordic</title>
       <link>/tags/nordic/</link>
-      <pubDate>Fri, 09 Oct 2020 00:57:03 -0500</pubDate>
+      <pubDate>Tue, 12 Jan 2021 18:25:00 -0500</pubDate>
       
       <guid>/tags/nordic/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>NRF52840</title>
+      <link>/tags/nrf52840/</link>
+      <pubDate>Tue, 12 Jan 2021 18:25:00 -0500</pubDate>
+      
+      <guid>/tags/nrf52840/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Storage</title>
+      <link>/tags/storage/</link>
+      <pubDate>Tue, 12 Jan 2021 18:25:00 -0500</pubDate>
+      
+      <guid>/tags/storage/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>BLE</title>
+      <link>/tags/ble/</link>
+      <pubDate>Sat, 26 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/ble/</guid>
       <description></description>
     </item>
     
