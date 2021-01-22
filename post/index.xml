@@ -6,14 +6,23 @@
     <description>Recent content in Posts on NeiNeiHippo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 Jan 2021 18:25:00 -0500</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 19 Jan 2021 18:25:00 -0500</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Nordic NRF52840 Storage Part II</title>
+      <link>/post/nrf52-storage-2/</link>
+      <pubDate>Tue, 19 Jan 2021 18:25:00 -0500</pubDate>
+      
+      <guid>/post/nrf52-storage-2/</guid>
+      <description>&lt;p&gt;This post is the continued talk about the persistent storage for Nordic nRF52840. In &lt;a href=&#34;/post/nrf52-storage-1/&#34;&gt;part I&lt;/a&gt; we went over using the &lt;strong&gt;Flash Data Storage&lt;/strong&gt; (FDS) library. In &lt;a href=&#34;/post/nrf52-storage-2/&#34;&gt;this part II&lt;/a&gt;, I&amp;rsquo;ll be discussing another import component, &lt;strong&gt;user information configuration registers&lt;/strong&gt; (UICR).&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Nordic NRF52840 Storage Part I</title>
       <link>/post/nrf52-storage-1/</link>
       <pubDate>Tue, 12 Jan 2021 18:25:00 -0500</pubDate>
       
       <guid>/post/nrf52-storage-1/</guid>
-      <description>&lt;p&gt;There are mainly two ways for persistent storage of data in NRF52840: &lt;strong&gt;flash&lt;/strong&gt; and &lt;strong&gt;UICR&lt;/strong&gt;. I&amp;rsquo;ll be discussing the flash mainly in this &lt;a href=&#34;/post/nrf52-storage-1/&#34;&gt;part I&lt;/a&gt;, and UICR in [part II].&lt;/p&gt;</description>
+      <description>&lt;p&gt;There are mainly two ways for persistent storage of data in NRF52840: &lt;strong&gt;flash&lt;/strong&gt; and &lt;strong&gt;UICR&lt;/strong&gt;. I&amp;rsquo;ll be discussing the flash mainly in this &lt;a href=&#34;/post/nrf52-storage-1/&#34;&gt;part I&lt;/a&gt;, and UICR in &lt;a href=&#34;/post/nrf52-storage-2/&#34;&gt;part II&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
     
     <item>

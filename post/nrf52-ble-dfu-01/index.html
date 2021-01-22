@@ -68,18 +68,18 @@
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-07-26T15:15:35-05:00">July 26, 2020</time></div></div>
 		</header><div class="content post__content clearfix">
 			<p>Noric provides detailed documentations of <a href="https://infocenter.nordicsemi.com/topic/sdk_nrf5_v17.0.0/lib_bootloader_dfu_process.html" title="info_bl_dfu">Bootloader and DFU modules</a></p>
-<h1 id="1-secure-device-firmware-update">1 Secure Device Firmware Update</h1>
+<h2 id="1-secure-device-firmware-update">1. Secure Device Firmware Update</h2>
 <p>Nordic has a nice step-by-step <a href="https://devzone.nordicsemi.com/nordic/short-range-guides/b/software-development-kit/posts/getting-started-with-nordics-secure-dfu-bootloader#h23sjziacp7vrw0scs2t3tua1ax0426" title="nordic dfu guide">guide</a>. A more detailed introduction can also be found at <a href="https://www.novelbits.io/category/over-the-air-device-firmware-update/" title="Novelbits">Novelbits</a>.</p>
 <p>This digram shows DFU process workflow.
 <img src="/images/nRF52_DFU_process_workflow.png" alt="process"></p>
 <p>To implement DFU, You will need <code>python 3</code> and <code>pip</code> to install <a href="https://github.com/NordicSemiconductor/pc-nrfutil" title="pc-nrfutil"><code>nrftuil</code></a> command-line tool. If you want you can setup a virtual environment as you normally would with python project, and install <code>nrfutil</code> inside the <code>venv</code>. an You&rsquo;ll also need GCC compiler toolchain for ARM, you can follow the previous <a href="/post/nordic-ble-01/">guide</a>. Verify installation with: <code>nrfutil version</code></p>
 <p>Use <code>nrfutil --help</code> to find all the commands, more about <strong>nRF Util</strong> can be found <a href="https://infocenter.nordicsemi.com/topic/ug_nrfutil/UG/nrfutil/nrfutil_intro.html" title="info-nrfutil">here</a>.</p>
 <p>I&rsquo;ll be using nRF52840 with SDK 15.3.0 and SoftDevice s140 version 6.1.1</p>
-<h2 id="11-generate-keys">1.1 Generate Keys:</h2>
+<h3 id="11-generate-keys">1.1. Generate Keys:</h3>
 <pre><code>nrfutil keys generate private.key
 </code></pre><p>This generate a private key, with which you can generate your public key for use with bootloader.</p>
 <pre><code>nrfutil keys display --key pk --format code private.key --out_file public_key.c
-</code></pre><h2 id="12-build-the-bootloader">1.2 Build the Bootloader</h2>
+</code></pre><h3 id="12-build-the-bootloader">1.2. Build the Bootloader</h3>
 <p>To perform the <a href="https://infocenter.nordicsemi.com/topic/sdk_nrf5_v17.0.0/lib_secure_boot.html" title="info_secure boot">secure boot</a>, the first step is to download and compile the <a href="https://github.com/kmackay/micro-ecc.git" title="micro-ecc library">micro-ECC library</a>,</p>
 <pre><code>cd &lt;nRF5 SDK&gt;/externa/micro-ecc
 git clone https://github.com/kmackay/micro-ecc.git
@@ -96,13 +96,13 @@ make
 ......
 </code></pre><p>Note that you could just overwrite the <code>dfu_public_key.c</code> with the <code>public_key.c</code> instead.</p>
 <p>Build the secure bootloader like any other application with <code>SES</code>.</p>
-<h2 id="13-flash-the-bootloader">1.3 Flash the Bootloader</h2>
+<h3 id="13-flash-the-bootloader">1.3. Flash the Bootloader</h3>
 <p>First, clear everything on the chip, either through SES &ldquo;<strong>Target</strong>&rdquo; =&gt; &ldquo;<strong>Connect J-Link</strong>&rdquo; and then &ldquo;<strong>Erase All</strong>&rdquo;, or use <strong>nrfjprog</strong>:</p>
 <pre><code>nrfjprog -f NRF52 --eraseall
 </code></pre><p>Next, flash <strong>bootloader</strong> and <strong>softdevice</strong> with SES, &ldquo;<strong>Target</strong>&rdquo; =&gt; &ldquo;<strong>Download xxx</strong>&rdquo;. Verify the bootloader is advertising &ldquo;<strong>DFUTarg</strong>&rdquo;.</p>
-<h1 id="2-over-the-air-ota-dfu">2 Over the Air (OTA) DFU</h1>
+<h2 id="2-over-the-air-ota-dfu">2. Over the Air (OTA) DFU</h2>
 <p>With the target device ready for firmware update, we will now be working on the firmware package itself.</p>
-<h2 id="21-create-dfu-zip-packet">2.1 Create DFU zip packet</h2>
+<h3 id="21-create-dfu-zip-packet">2.1. Create DFU zip packet</h3>
 <p>Build an application, e.g., <strong>ble_app_blinky</strong>, copy the output <strong>.hex</strong> file to where the private key located, and use <code>nrfutil</code> to generate the <strong>.zip</strong> file.</p>
 <pre><code>nrfutil pkg generate --hw-version 52 --application-version 1 --application ble_app_blinky_pca10056_s140.hex --sd-req 0xB6 --sd-id 0xB6 --key-file private.key app_dfu_package.zip
 </code></pre><p>A few notes here:</p>
@@ -129,16 +129,16 @@ make
 </li>
 </ul>
 <p>Find out all the options with <code>nrfutil pkg generate --help</code></p>
-<h2 id="22-performing-ota-dfu">2.2 Performing OTA DFU</h2>
+<h3 id="22-performing-ota-dfu">2.2. Performing OTA DFU</h3>
 <p>Copy the generated <strong>zip</strong> file to the phone or a PC, open <strong>nRF Connect</strong> App, i.e. <strong>nrfconnect341x8664</strong> for Linux, and connect to <strong>DfuTarg</strong>. For mobile app, switch the page all the way to the right, the last one is <strong>DFU</strong>, click <strong>Open Document Picker</strong> to navigate to the zip file location, and click <strong>Start</strong> button. For the <a href="https://infocenter.nordicsemi.com/topic/ug_nrfconnect_ble/UG/nRF_Connect_BLE/nRF_Connect_DFU.html" title="OTA DFU with pc nRF Connect">pc version</a>, there&rsquo;s an extra <strong>DFU</strong> button besides the <strong>Peripheral</strong>. Click it, then select the zip file and start DFU process. Once the process is completed, the new application should begin advertising.</p>
 <p>Button Triggered DFU</p>
-<h2 id="23-buttonless-ota-dfu">2.3 Buttonless OTA DFU</h2>
+<h3 id="23-buttonless-ota-dfu">2.3. Buttonless OTA DFU</h3>
 <p>Up to this point, if you want perform OTA DFU, you will have to set the board to the DFU mode by holding Button_3 on the dev kit while powering up. Obviously this is not the preferred behavior.</p>
 <p>Nordic provides the <a href="https://infocenter.nordicsemi.com/topic/sdk_nrf5_v17.0.0/ble_sdk_app_buttonless_dfu.html" title="info_buttonless_dfu">DFU Buttonless example</a> under <strong>\examples\ble_peripheral\ble_app_buttonless_dfu</strong>, you can also follow this <a href="https://github.com/gamnes/nRF52832-buttonless-dfu-development-tutorial" title="github buttonless dfu tutorial nRF52832">github tutorial of nRF52832</a>.</p>
 <p>First build the application and then create the package as in <strong>section 2.1</strong>. Perform the OTA DFU, once complete, you can now start a new OTA DFU without the need to hold the button to boot into DFU mode. The <a href="https://devzone.nordicsemi.com/nordic/short-range-guides/b/software-development-kit/posts/getting-started-with-nordics-secure-dfu-bootloader#h23sjziacp7vrw0scs2t3tua1ax0426" title="nordic dfu guide">guide</a> has a detailed section of explanation.</p>
-<h1 id="3-merge-all-in-one-flash">3 Merge All in One Flash</h1>
+<h2 id="3-merge-all-in-one-flash">3. Merge All in One Flash</h2>
 <p>There are times when you don&rsquo;t want to do a bootloader first and then DFU, e.g. in production, you may want have all components: bootloader, SoftDevice and application combined together in a single DFU flash, and get the application running right after reboot. In order to do that, we need make sure the bootloader knows the application is in the memory or it will boot into DFU mode instead. This can be achieved by generating bootloader settings and merge together with other components, e.g., bootloader-softdevice-application-settings.</p>
-<h2 id="31-settings-page">3.1 Settings Page</h2>
+<h3 id="31-settings-page">3.1. Settings Page</h3>
 <p>For <a href="https://infocenter.nordicsemi.com/topic/ug_nrfutil/UG/nrfutil/nrfutil_settings_generate_display.html">Generating and displaying bootloader settings</a>, run the following command</p>
 <pre><code>nrfutil settings generate --family NRF52840 --application my_app.hex --application-version 0 --bootloader-version 0 --bl-settings-version 2 my_settings.hex
 </code></pre><ul>
@@ -147,12 +147,12 @@ make
 <li><code>--application</code>: the application hex file</li>
 </ul>
 <p>Use <code>nrfutil settings display my_app_settings.hex</code> check the contents of the generated HEX file. For more inforamtion use <code>nrfutil settings generate --help</code>.</p>
-<h2 id="32-merge-hex-into-one">3.2 Merge Hex into One</h2>
+<h3 id="32-merge-hex-into-one">3.2. Merge Hex into One</h3>
 <p>Use <code>mergehex</code> to merge two hex files that can be any combinations of bootloader, SoftDevice, application, setting, and their combined hex files. E.g.</p>
 <pre><code>mergehex -m bootloader.hex s140_6.1.1_softdevice.hex -o sd_bootloader.hex
 mergehex -m my_app.hex my_settings.hex -o my_app_settings.hex
 mergehex -m my_app_settings.hex sd_bootloader.hex -o my_app_settings_sd_bootloader.hex
-</code></pre><h2 id="33-flash-the-firmware">3.3 Flash the Firmware</h2>
+</code></pre><h3 id="33-flash-the-firmware">3.3. Flash the Firmware</h3>
 <p>Use <code>nrfjprog</code> to flash the hex file to the chip. Remember update the <code>nrfjprog</code> to the newest version, or you may face <a href="https://devzone.nordicsemi.com/f/nordic-q-a/64813/the-nrfjprog---program-option---chiperase-not-working-properly" title="chiperase issue">unexpected issue</a> .</p>
 <pre><code>nrfjprog -f NRF52 --program sd_s140_bootloader_buttonless_with_setting_page_dfu_secure_ble_debug_without_bonds.hex --chiperase -r
 
@@ -160,7 +160,7 @@ mergehex -m my_app_settings.hex sd_bootloader.hex -o my_app_settings_sd_bootload
 <li><code>--chiperase</code>: erase all user available memory, inlcuding UICR</li>
 <li><code>-r</code>: reset the device after the flash DFU</li>
 </ul>
-<h1 id="4-debugging-application-with-bootloader-in-place">4 Debugging Application with Bootloader in Place</h1>
+<h2 id="4-debugging-application-with-bootloader-in-place">4. Debugging Application with Bootloader in Place</h2>
 <p>In this <a href="https://github.com/gamnes/nRF52832-buttonless-dfu-development-tutorial" title="github buttonless dfu tutorial nRF52832">guide for nRF52832</a> there&rsquo;s a section describe debugging application firmware with the booloader in place. The same rule applies to the nRF52840. Here are the steps I use to debug with <code>SES</code>:</p>
 <h4 id="step-1-download-the-bootloader"><strong>Step 1 Download the Bootloader</strong></h4>
 <p>Flash the bootloader/SoftDevice using either <code>SES</code> or <code>nrfjprog</code></p>
@@ -175,10 +175,10 @@ debug_additional_load_file1=&quot;/home/lei/opt/nRF5/Python/DFU/SDK16.0_S140_7.0
 <p>Now click <code>Build and Debug</code>, just make sure you are in <code>Debug</code> mode,</p>
 <h4 id="step-4-debug"><strong>Step 4 Debug</strong></h4>
 <p>After the application and settings successfully flashed, the debugger should be running now. Next time you can just click <code>Debug =&gt; Go</code>. If you need to rebuild the application, you&rsquo;ll have to do step 2 to again.</p>
-<p>Remember to to enable <strong>NRF_LOG_BACKEND_RTT_ENABLED</strong>, disable <strong>NRF_LOG_BACKEND_UART_ENABLED</strong> and  <strong>NRF_FPRINTF_FLAG_AUTOMATIC_CR_ON_LF_ENABLED</strong></p>
-<h2 id="issue-with-adding-hex-file-in-the-ses-debugger">Issue with adding <code>hex</code> file in the SES Debugger</h2>
+<p>Remember to to enable <strong>NRF_LOG_BACKEND_RTT_ENABLED</strong>, disable <strong>NRF_LOG_BACKEND_UART_ENABLED</strong> and  <strong>NRF_FPRINTF_FLAG_AUTOMATIC_CR_ON_LF_ENABLED</strong>.</p>
+<h4 id="issue-with-adding-hex-file-in-the-ses-debugger"><em>Issue with adding <code>hex</code> file in the SES Debugger</em></h4>
 <p>I have had problems that using SES to loader Settings.hex file somehow failed to pass checksum causing board stuck in DFU mode. The <a href="https://devzone.nordicsemi.com/f/nordic-q-a/37507/buttonless-dfu-debugging-problem/144353#144353" title="DFU debugger checksum">workaround</a> is to specify the output application <em><strong>.elf</strong></em> and <em><strong>.hex</strong></em> file in <strong>Debugger-&gt;Debug Symbols Files</strong> and <strong>Loader-&gt;Load File</strong> setting respectively.</p>
-<h1 id="5-dual-bank-and-single-bank-updates">5 Dual-Bank and Single-Bank Updates</h1>
+<h2 id="5-dual-bank-and-single-bank-updates">5. Dual-Bank and Single-Bank Updates</h2>
 <p>If NRF_DFU_SINGLE_BANK_APP_UPDATES is set, then single-bank update is preferred. Otherwise, all firmware updates are performed as dual-bank updates.
 <a href="https://infocenter.nordicsemi.com/topic/sdk_nrf5_v17.0.0/lib_bootloader_dfu_banks.html" title="dual-bank update">I have problem here!</a></p>
 		</div>
@@ -241,11 +241,11 @@ debug_additional_load_file1=&quot;/home/lei/opt/nRF5/Python/DFU/SDK16.0_S140_7.0
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/nrf52-storage-2/">Nordic NRF52840 Storage Part II</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/nrf52-storage-1/">Nordic NRF52840 Storage Part I</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/nordic-ble-03/">Nordic BLE Advertising Part I</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-serial/">Nordic BLE Serial</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-dfu-02/">Merge Nordic Buttonless DFU with NUS</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-dfu-01/">Nordic BLE Device Firmware Update Bootloader</a></li>
 		</ul>
 	</div>
 </div>
@@ -257,7 +257,6 @@ debug_additional_load_file1=&quot;/home/lei/opt/nRF5/Python/DFU/SDK16.0_S140_7.0
 		<a class="widget-taglist__link widget__link btn" href="/tags/dfu/" title="DFU">DFU</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/flash/" title="Flash">Flash</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/imx8mm/" title="iMX8MM">iMX8MM</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/linux/" title="Linux">Linux</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/nordic/" title="Nordic">Nordic</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/nrf52840/" title="NRF52840">NRF52840</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/nus/" title="NUS">NUS</a>
@@ -266,6 +265,7 @@ debug_additional_load_file1=&quot;/home/lei/opt/nRF5/Python/DFU/SDK16.0_S140_7.0
 		<a class="widget-taglist__link widget__link btn" href="/tags/serial/" title="Serial">Serial</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/storage/" title="Storage">Storage</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu/" title="Ubuntu">Ubuntu</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/uicr/" title="UICR&#34;">UICR&#34;</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vs-code/" title="VS Code">VS Code</a>
 	</div>
 </div>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Nordic NRF52840 Storage Part II - NeiNeiHippo</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="Nordic NRF52840 Storage Part II" />
+<meta property="og:description" content="This post is the continued talk about the persistent storage for Nordic nRF52840. In part I we went over using the Flash Data Storage (FDS) library. In this part II, I&rsquo;ll be discussing another import component, user information configuration registers (UICR)." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/nrf52-storage-2/" />
+<meta property="article:published_time" content="2021-01-19T18:25:00-05:00" />
+<meta property="article:modified_time" content="2021-01-19T18:25:00-05:00" />
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo">
+		<a class="logo__link" href="/" title="NeiNeiHippo" rel="home">
+			<div class="logo__item logo__text">
+					<div class="logo__title">NeiNeiHippo</div>
+					<div class="logo__tagline">Just another site</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">Home</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Nordic NRF52840 Storage Part II</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2021-01-19T18:25:00-05:00">January 19, 2021</time></div></div>
+		</header><div class="content post__content clearfix">
+			<p>This post is the continued talk about the persistent storage for Nordic nRF52840. In <a href="/post/nrf52-storage-1/">part I</a> we went over using the <strong>Flash Data Storage</strong> (FDS) library. In <a href="/post/nrf52-storage-2/">this part II</a>, I&rsquo;ll be discussing another import component, <strong>user information configuration registers</strong> (UICR).</p>
+<p>UICRs are non-volatile memory (NVM) registers for configuring user-specific settings, this is in contract to <strong>Factory information configuration registers</strong> (FICR), which are pre-programmed in the Nordic factory and cannot be erased by the user. Thus UICR, once written, won&rsquo;t be able to be erased by DFU or regular <a href="https://devzone.nordicsemi.com/f/nordic-q-a/61116/unique-serial-number-persistence-storage">SES flash memory</a> operations, make it suitable for factory configuration settings, e.g. serial number. It can, however, be erased with <code>nrfjprog --eraseall / --eraseuicr</code> or <code>nrfjprog --program --chiperase / --sectoranduicrerase</code>. Be aware Nordic stores bootloader address in UICR too (in fact only <strong>CUSTOMER</strong>[0]-[31] are for user), an <a href="https://devzone.nordicsemi.com/f/nordic-q-a/50948/erase-uicr-and-merge-bootloader-problem" title="erase_uicr_bootloader">erase of UICR</a> will cause bootloader fail.</p>
+<h2 id="ficr-uicr-and-mac-address">FICR, UICR, and Mac Address</h2>
+<p>Like many other <a href="https://devzone.nordicsemi.com/f/nordic-q-a/48642/generation-of-a-serialized-id-code-at-load-time/194176#194176" title="id">posts</a>, I came to learn FICR/UICR by searching a unique identifier for each nRF chip. There are many other aspects of FICR and UICR, which are usually under the <em><strong>core components</strong></em> of the <a href="https://infocenter.nordicsemi.com/topic/struct_nrf52/struct/nrf52840.html" title="specification">product specification</a>, but will not be discussed in this post.</p>
+<p>In <a href="https://devzone.nordicsemi.com/f/nordic-q-a/48642/generation-of-a-serialized-id-code-at-load-time/194176#194176" title="load_MAC">short</a>, the default <a href="https://devzone.nordicsemi.com/f/nordic-q-a/2112/how-to-get-6-byte-mac-address-at-nrf51822#6677">6-bytes</a> BLE address displayed in peer is the MAC address stored in <strong>DEVICEADDR</strong> registers in FICR. It is <a href="https://devzone.nordicsemi.com/f/nordic-q-a/60187/nrf52832-bluetooth-mac-address-manufacturer" title="manuf_MAC_addr">randomly generated</a> by the chip manufacturer (usually by Nordic) and can not be manipulated by user. It can be considered unique in most practical scenarios.</p>
+<p><img src="/images/BLE_GAP_Address_Types.png" alt="BLE_ADDR"></p>
+<p>You can, however, create your own MAC address following the BT SIG specification as discussed <a href="https://devzone.nordicsemi.com/f/nordic-q-a/2084/gap-address-types/8939#8939" title="BLE_MAC_type">here</a> and <a href="https://devzone.nordicsemi.com/f/nordic-q-a/27012/how-to-distinguish-between-random-and-public-gap-addresses" title="BLE_MAC_rule">here</a>, save it to the user configuration registers UICRs, and then load and set it as the BLE address with <code>sd_ble_gap_addr_set()</code> function in your application. You can go over the details of nice write-ups <a href="https://jimmywongiot.com/2019/08/19/manufacturer-storage-data-on-uicr-region/" title="jimmy_uicr_1">here</a> and <a href="https://jimmywongiot.com/2019/09/16/how-to-store-the-custom-address-device-name-and-device-id-on-nrf52-series/" title="jimmy_uicr_2">here</a>.</p>
+<h2 id="uicr-usage">UICR Usage</h2>
+<p>UICR has 32 CUSTOMER registers (each 4-bytes) of total 1024 bits for user configurations. Though they are most suitable for settings of an end product that don&rsquo;t change once left the production line, you do have the option to change them in the application after <a href="https://devzone.nordicsemi.com/f/nordic-q-a/61305/writing-into-uicr-register-by-disabling-softdevice" title="uicr_disable_sd">disabling the SoftDevice</a>. <a href="https://devzone.nordicsemi.com/f/nordic-q-a/18257/how-to-write-data-to-uicr-customer-registers" title="write_uicr_application">Here</a>&rsquo;s a discussion about the setting the register during program execution.</p>
+<p>To write the registers in production time, you can either include the UICR values into the application hex file (see <a href="https://infocenter.nordicsemi.com/topic/sdk_nrf5_v16.0.0/uicr_config_example.html" title="uicr_config_example">UICR Config Example</a>), or write to the registers directly with <code>nrfjprog</code>:</p>
+<pre><code>nrfjprog -f nrf52 --memwr 0x10001080 --val 0xA1A2A3A4
+</code></pre><p>where the base address of UICR is 0x10001000, and the user reserved register <strong>CUSTOMER[x]</strong> starts at 0x080. You can write any of the 32 registers you want, but the value also has to be <a href="https://devzone.nordicsemi.com/f/nordic-q-a/23792/can-i-modify-ucir-in-my-application/93583#93583" title="32bit_aligned">aligned</a> to 32-bit <strong>word</strong>.</p>
+<p>To read from command line tool:</p>
+<pre><code>nrfjprog --memrd 0x10001080 --w 32 --n 4
+</code></pre><p>where <code>--w &lt;display in 32/16/8&gt;</code> and <code>--n &lt;number of bytes to read&gt;</code>.</p>
+<p>To read from application code:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">// create a buffer
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">uint8_t</span> buffer[SERIAL_NUMBER_LENGTH];
+memset(buffer, <span style="color:#ae81ff">0xff</span>, SERIAL_NUMBER_LENGTH);
+<span style="color:#75715e">// read from UICR-&gt;CUSTOMER[0]
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">uint8_t</span><span style="color:#f92672">*</span> p_uicr <span style="color:#f92672">=</span> (<span style="color:#66d9ef">uint8_t</span><span style="color:#f92672">*</span>) <span style="color:#f92672">&amp;</span>NRF_UICR<span style="color:#f92672">-&gt;</span>CUSTOMER[<span style="color:#ae81ff">0</span>]; <span style="color:#75715e">// 0x10001080
+</span><span style="color:#75715e"></span>memcpy(buffer, p_uicr, SERIAL_NUMBER_LENGTH);
+</code></pre></div><p>where the bytes are stored in little-endian fashion in each register.</p>
+<p>Finally, be aware the flash memory <a href="https://infocenter.nordicsemi.com/index.jsp?topic=%2Fcom.nordic.infocenter.nrf52832.ps.v1.1%2Fabs_max_ratings.html&amp;cp=2_1_0_4&amp;anchor=abs_max_ratings" title="abs_max_rations">endurance</a> is 10,000 writes/erase cycles, which <a href="https://devzone.nordicsemi.com/f/nordic-q-a/36138/how-many-times-is-the-life-of-the-uicr-ficr-erase-or-write">applies to UICR</a> as well.</p>
+<h2 id="uicr-protection">UICR Protection</h2>
+<p>See this <a href="https://devzone.nordicsemi.com/f/nordic-q-a/20528/why-data-can-not-be-wrote-into-the-registers-of-nrf52840/80033#80033" title="protection">post</a> for details.</p>
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/nordic/" rel="tag">Nordic</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/nrf52840/" rel="tag">NRF52840</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/storage/" rel="tag">Storage</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/uicr/" rel="tag">UICR&#34;</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Lei Shi avatar" src="/img/avatar.png" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name"></span>
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/nrf52-storage-1/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">Nordic NRF52840 Storage Part I</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/nrf52-storage-2/">Nordic NRF52840 Storage Part II</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/nrf52-storage-1/">Nordic NRF52840 Storage Part I</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/nordic-ble-03/">Nordic BLE Advertising Part I</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-serial/">Nordic BLE Serial</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-dfu-02/">Merge Nordic Buttonless DFU with NUS</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/aosp/" title="AOSP">AOSP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ble/" title="BLE">BLE</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dfu/" title="DFU">DFU</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/flash/" title="Flash">Flash</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/imx8mm/" title="iMX8MM">iMX8MM</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nordic/" title="Nordic">Nordic</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nrf52840/" title="NRF52840">NRF52840</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nus/" title="NUS">NUS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nxp/" title="NXP">NXP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/segger/" title="SEGGER">SEGGER</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/serial/" title="Serial">Serial</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/storage/" title="Storage">Storage</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu/" title="Ubuntu">Ubuntu</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/uicr/" title="UICR&#34;">UICR&#34;</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/vs-code/" title="VS Code">VS Code</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 NeiNeiHippo.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

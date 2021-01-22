@@ -8,7 +8,7 @@
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 		<meta property="og:title" content="Nordic NRF52840 Storage Part I" />
-<meta property="og:description" content="There are mainly two ways for persistent storage of data in NRF52840: flash and UICR. I&rsquo;ll be discussing the flash mainly in this part I, and UICR in [part II]." />
+<meta property="og:description" content="There are mainly two ways for persistent storage of data in NRF52840: flash and UICR. I&rsquo;ll be discussing the flash mainly in this part I, and UICR in part II." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/post/nrf52-storage-1/" />
 <meta property="article:published_time" content="2021-01-12T18:25:00-05:00" />
@@ -67,8 +67,8 @@
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2021-01-12T18:25:00-05:00">January 12, 2021</time></div></div>
 		</header><div class="content post__content clearfix">
-			<p>There are mainly two ways for persistent storage of data in NRF52840: <strong>flash</strong> and <strong>UICR</strong>. I&rsquo;ll be discussing the flash mainly in this <a href="/post/nrf52-storage-1/">part I</a>, and UICR in [part II].</p>
-<h1 id="1-flash-memory">1. Flash Memory</h1>
+			<p>There are mainly two ways for persistent storage of data in NRF52840: <strong>flash</strong> and <strong>UICR</strong>. I&rsquo;ll be discussing the flash mainly in this <a href="/post/nrf52-storage-1/">part I</a>, and UICR in <a href="/post/nrf52-storage-2/">part II</a>.</p>
+<h2 id="1-flash-memory">1. Flash Memory</h2>
 <p>Nordic SDK provides two libraries to handle flash memory storage, <a href="https://infocenter.nordicsemi.com/topic/sdk_nrf5_v16.0.0/lib_fstorage.html" title="lib_fstorage">fstorage</a> module and <a href="https://infocenter.nordicsemi.com/topic/sdk_nrf5_v16.0.0/lib_fds.html" title="lib_fds">FDS</a> module. They were experimental, but now a part of validated libraries in SDK 17.</p>
 <p>The Flash Data Storage (FDS) module is more higher level mini file system. It uses the Flash Storage (fstorage) as backend to write to flash. SoftDevice is required to execute the write.</p>
 <blockquote>
@@ -84,7 +84,7 @@ Minimizing memory usage by allowing for flexible data size.</li>
 <li>Impose no restrictions on the content of the data (which means that it can contain special characters).</li>
 </ul>
 <p>With FDS, you will treat data as record and files, which is much clean and easy to handle. FDS will make sure of an even flash wear distribution but come with more <a href="https://devzone.nordicsemi.com/f/nordic-q-a/55680/storing-data-to-flash-memory" title="overhead">overhead</a> of each record writing. Only FDS will be discussed here.</p>
-<h1 id="2-storage-format">2. Storage Format</h1>
+<h2 id="2-storage-format">2. Storage Format</h2>
 <p>FDS stores data as <a href="https://infocenter.nordicsemi.com/topic/sdk_nrf5_v16.0.0/lib_fds_format.html" title="record_format">records</a>, which has a header and a content.
 <img src="/images/record_format.png" alt="record"></p>
 <p>Every record is identified by a key and a file ID it is assigned to, however, we need to understand:</p>
@@ -105,7 +105,7 @@ Minimizing memory usage by allowing for flexible data size.</li>
 <p>The sole unique identifier is the <em>Record ID</em>, but is not assigned nor can it be manipulated by user. All of these may sound confusing which it is (see post <a href="https://devzone.nordicsemi.com/f/nordic-q-a/35843/flash-data-storage-fds-what-is-the-point-of-files-and-records">here</a> and <a href="https://devzone.nordicsemi.com/f/nordic-q-a/47587/difference-between-fds-record-key-and-record-id">here</a>). The way to make sense of it is: records are the only physical structure of data stored, thus require an unique identifier, AKA <em>record ID</em>, while files are just some abstract collections.</p>
 <p>You may very well have many same record keys or file IDs, but I would recommend treat them as keys in database records, so you can link the same key to different tables/files to make life easier.</p>
 <p>The other important configuration is virtual page. The total amount of flash memory for use depends on the size (<strong>FDS_VIRTUAL_PAGE_SIZE</strong>) and number of virtual pages (<strong>FDS_VIRTUAL_PAGES</strong>). By default, a virtual page is the same size as a physical page. One of the virtual page is reserved by the system for garbage collection, and this <a href="https://devzone.nordicsemi.com/f/nordic-q-a/60073/how-to-calculate-flash-life-by-garbage-collection" title="page_swap">post</a> discussed some of underlining mechanism of page swapping during the garbage collection. Details of configuration options for the FDS can be found <a href="https://infocenter.nordicsemi.com/topic/sdk_nrf5_v16.0.0/lib_fds_functionality.html" title="functionality">here</a>.</p>
-<h1 id="3-usage">3. Usage</h1>
+<h2 id="3-usage">3. Usage</h2>
 <p>Before read and write with FDS, it is <strong>required</strong> to:</p>
 <ol>
 <li>Make sure the SoftDevice is initialized,</li>
@@ -169,6 +169,12 @@ Minimizing memory usage by allowing for flexible data size.</li>
 			<p class="pager__title">Nordic BLE Advertising Part I</p>
 		</a>
 	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/post/nrf52-storage-2/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">Nordic NRF52840 Storage Part II</p>
+		</a>
+	</div>
 </nav>
 
 
@@ -186,11 +192,11 @@ Minimizing memory usage by allowing for flexible data size.</li>
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/nrf52-storage-2/">Nordic NRF52840 Storage Part II</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/nrf52-storage-1/">Nordic NRF52840 Storage Part I</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/nordic-ble-03/">Nordic BLE Advertising Part I</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-serial/">Nordic BLE Serial</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-dfu-02/">Merge Nordic Buttonless DFU with NUS</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/nrf52-ble-dfu-01/">Nordic BLE Device Firmware Update Bootloader</a></li>
 		</ul>
 	</div>
 </div>
@@ -202,7 +208,6 @@ Minimizing memory usage by allowing for flexible data size.</li>
 		<a class="widget-taglist__link widget__link btn" href="/tags/dfu/" title="DFU">DFU</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/flash/" title="Flash">Flash</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/imx8mm/" title="iMX8MM">iMX8MM</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/linux/" title="Linux">Linux</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/nordic/" title="Nordic">Nordic</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/nrf52840/" title="NRF52840">NRF52840</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/nus/" title="NUS">NUS</a>
@@ -211,6 +216,7 @@ Minimizing memory usage by allowing for flexible data size.</li>
 		<a class="widget-taglist__link widget__link btn" href="/tags/serial/" title="Serial">Serial</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/storage/" title="Storage">Storage</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu/" title="Ubuntu">Ubuntu</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/uicr/" title="UICR&#34;">UICR&#34;</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vs-code/" title="VS Code">VS Code</a>
 	</div>
 </div>

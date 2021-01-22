@@ -3,42 +3,52 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/</loc>
+    <lastmod>2021-01-19T18:25:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/nordic/</loc>
+    <lastmod>2021-01-19T18:25:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/nrf52-storage-2/</loc>
+    <lastmod>2021-01-19T18:25:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/nrf52840/</loc>
+    <lastmod>2021-01-19T18:25:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2021-01-19T18:25:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/storage/</loc>
+    <lastmod>2021-01-19T18:25:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2021-01-19T18:25:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/uicr/</loc>
+    <lastmod>2021-01-19T18:25:00-05:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/tags/flash/</loc>
     <lastmod>2021-01-12T18:25:00-05:00</lastmod>
   </url>
   
   <url>
-    <loc>/</loc>
-    <lastmod>2021-01-12T18:25:00-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/nordic/</loc>
-    <lastmod>2021-01-12T18:25:00-05:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/post/nrf52-storage-1/</loc>
-    <lastmod>2021-01-12T18:25:00-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/nrf52840/</loc>
-    <lastmod>2021-01-12T18:25:00-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/post/</loc>
-    <lastmod>2021-01-12T18:25:00-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/storage/</loc>
-    <lastmod>2021-01-12T18:25:00-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
     <lastmod>2021-01-12T18:25:00-05:00</lastmod>
   </url>
   
@@ -105,11 +115,6 @@
   <url>
     <loc>/tags/ubuntu/</loc>
     <lastmod>2020-06-02T14:14:31-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/linux/</loc>
-    <lastmod>2019-08-17T14:14:31-05:00</lastmod>
   </url>
   
   <url>
