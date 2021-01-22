@@ -81,7 +81,7 @@
 </code></pre><p>where the base address of UICR is 0x10001000, and the user reserved register <strong>CUSTOMER[x]</strong> starts at 0x080. You can write any of the 32 registers you want, but the value also has to be <a href="https://devzone.nordicsemi.com/f/nordic-q-a/23792/can-i-modify-ucir-in-my-application/93583#93583" title="32bit_aligned">aligned</a> to 32-bit <strong>word</strong>.</p>
 <p>To read from command line tool:</p>
 <pre><code>nrfjprog --memrd 0x10001080 --w 32 --n 4
-</code></pre><p>where <code>--w &lt;display in 32/16/8&gt;</code> and <code>--n &lt;number of bytes to read&gt;</code>.</p>
+</code></pre><p>where <code>--w &lt;display in 32/16/8&gt;</code> and <code>--n &lt;number of bytes to read&gt;</code>. A hardware reset is required for it to take effect.</p>
 <p>To read from application code:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">// create a buffer
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">uint8_t</span> buffer[SERIAL_NUMBER_LENGTH];
