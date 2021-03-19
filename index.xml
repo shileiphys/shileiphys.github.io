@@ -6,7 +6,25 @@
     <description>Recent content on NeiNeiHippo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 Jan 2021 18:25:00 -0500</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 19 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Stereo Correspondence</title>
+      <link>/post/stereo/</link>
+      <pubDate>Fri, 19 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/post/stereo/</guid>
+      <description>&lt;p&gt;To be updated &amp;hellip;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Parallel List Ranking - Helman &amp; JaJa</title>
+      <link>/post/ihpc-helmanjaja/</link>
+      <pubDate>Thu, 18 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/post/ihpc-helmanjaja/</guid>
+      <description>Recently I implemented a list ranking algorithm &amp;ldquo;Designing Practical Efficient Algorithms for Symmetric Multiprocessors&amp;rdquo; by Helman &amp;amp; JaJa, in my OMSCS course Intro to High Performance Computing. You can download the paper here. There&amp;rsquo;s also a very helpful introduction by a fellow classmate, which makes it much easier to understand the concepts. But if you want to implement the algorithm, don&amp;rsquo;t skip the paper, as a matter of fact, implement it faithfully or you code may end up in a very bad place.</description>
+    </item>
+    
     <item>
       <title>Nordic NRF52840 Storage Part II</title>
       <link>/post/nrf52-storage-2/</link>

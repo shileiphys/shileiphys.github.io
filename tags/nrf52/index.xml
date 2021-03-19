@@ -1,30 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on NeiNeiHippo</title>
-    <link>/post/</link>
-    <description>Recent content in Posts on NeiNeiHippo</description>
+    <title>nRF52 on NeiNeiHippo</title>
+    <link>/tags/nrf52/</link>
+    <description>Recent content in nRF52 on NeiNeiHippo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Stereo Correspondence</title>
-      <link>/post/stereo/</link>
-      <pubDate>Fri, 19 Mar 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/post/stereo/</guid>
-      <description>&lt;p&gt;To be updated &amp;hellip;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Parallel List Ranking - Helman &amp; JaJa</title>
-      <link>/post/ihpc-helmanjaja/</link>
-      <pubDate>Thu, 18 Mar 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/post/ihpc-helmanjaja/</guid>
-      <description>Recently I implemented a list ranking algorithm &amp;ldquo;Designing Practical Efficient Algorithms for Symmetric Multiprocessors&amp;rdquo; by Helman &amp;amp; JaJa, in my OMSCS course Intro to High Performance Computing. You can download the paper here. There&amp;rsquo;s also a very helpful introduction by a fellow classmate, which makes it much easier to understand the concepts. But if you want to implement the algorithm, don&amp;rsquo;t skip the paper, as a matter of fact, implement it faithfully or you code may end up in a very bad place.</description>
-    </item>
-    
+    <lastBuildDate>Tue, 19 Jan 2021 18:25:00 -0500</lastBuildDate><atom:link href="/tags/nrf52/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Nordic NRF52840 Storage Part II</title>
       <link>/post/nrf52-storage-2/</link>
@@ -77,15 +59,6 @@
       
       <guid>/post/nrf52-ble-dfu-01/</guid>
       <description>&lt;p&gt;Noric provides detailed documentations of &lt;a href=&#34;https://infocenter.nordicsemi.com/topic/sdk_nrf5_v17.0.0/lib_bootloader_dfu_process.html&#34; title=&#34;info_bl_dfu&#34;&gt;Bootloader and DFU modules&lt;/a&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>iMX8M Mini with AOSP Beginner Part 1</title>
-      <link>/post/imx8mm-aosp-01/</link>
-      <pubDate>Tue, 02 Jun 2020 14:14:31 -0500</pubDate>
-      
-      <guid>/post/imx8mm-aosp-01/</guid>
-      <description>&lt;p&gt;I recently got an NXP i.MX 8M Mini EVK board. It has rather powerful Arm Cortex-A53, Cortex-M4, Audio, Voice and Video processors. As a total newbie with no previous experiences on Android Operation System Project (&lt;a href=&#34;https://source.android.com/&#34; title=&#34;AOSP&#34;&gt;AOSP&lt;/a&gt;) or NXP iMX series, this post records my first hands-on.&lt;/p&gt;</description>
     </item>
     
     <item>

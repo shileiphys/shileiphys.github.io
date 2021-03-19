@@ -6,94 +6,40 @@
     <description>Recent content in Tags on NeiNeiHippo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 Jan 2021 18:25:00 -0500</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 19 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Nordic</title>
-      <link>/tags/nordic/</link>
-      <pubDate>Tue, 19 Jan 2021 18:25:00 -0500</pubDate>
+      <title>stereo</title>
+      <link>/tags/stereo/</link>
+      <pubDate>Fri, 19 Mar 2021 00:00:00 +0000</pubDate>
       
-      <guid>/tags/nordic/</guid>
+      <guid>/tags/stereo/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>NRF52840</title>
-      <link>/tags/nrf52840/</link>
-      <pubDate>Tue, 19 Jan 2021 18:25:00 -0500</pubDate>
+      <title>IHPC</title>
+      <link>/tags/ihpc/</link>
+      <pubDate>Thu, 18 Mar 2021 00:00:00 +0000</pubDate>
       
-      <guid>/tags/nrf52840/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Storage</title>
-      <link>/tags/storage/</link>
-      <pubDate>Tue, 19 Jan 2021 18:25:00 -0500</pubDate>
-      
-      <guid>/tags/storage/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>UICR&#34;</title>
-      <link>/tags/uicr/</link>
-      <pubDate>Tue, 19 Jan 2021 18:25:00 -0500</pubDate>
-      
-      <guid>/tags/uicr/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Flash</title>
-      <link>/tags/flash/</link>
-      <pubDate>Tue, 12 Jan 2021 18:25:00 -0500</pubDate>
-      
-      <guid>/tags/flash/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Advertising</title>
-      <link>/tags/advertising/</link>
-      <pubDate>Sat, 26 Dec 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/advertising/</guid>
+      <guid>/tags/ihpc/</guid>
       <description></description>
     </item>
     
     <item>
       <title>BLE</title>
       <link>/tags/ble/</link>
-      <pubDate>Sat, 26 Dec 2020 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 19 Jan 2021 18:25:00 -0500</pubDate>
       
       <guid>/tags/ble/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Serial</title>
-      <link>/tags/serial/</link>
-      <pubDate>Fri, 09 Oct 2020 00:57:03 -0500</pubDate>
+      <title>nRF52</title>
+      <link>/tags/nrf52/</link>
+      <pubDate>Tue, 19 Jan 2021 18:25:00 -0500</pubDate>
       
-      <guid>/tags/serial/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>DFU</title>
-      <link>/tags/dfu/</link>
-      <pubDate>Thu, 08 Oct 2020 19:45:59 -0500</pubDate>
-      
-      <guid>/tags/dfu/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>NUS</title>
-      <link>/tags/nus/</link>
-      <pubDate>Thu, 08 Oct 2020 19:45:59 -0500</pubDate>
-      
-      <guid>/tags/nus/</guid>
+      <guid>/tags/nrf52/</guid>
       <description></description>
     </item>
     
@@ -107,29 +53,11 @@
     </item>
     
     <item>
-      <title>iMX8MM</title>
-      <link>/tags/imx8mm/</link>
-      <pubDate>Tue, 02 Jun 2020 14:14:31 -0500</pubDate>
-      
-      <guid>/tags/imx8mm/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>NXP</title>
       <link>/tags/nxp/</link>
       <pubDate>Tue, 02 Jun 2020 14:14:31 -0500</pubDate>
       
       <guid>/tags/nxp/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Ubuntu</title>
-      <link>/tags/ubuntu/</link>
-      <pubDate>Tue, 02 Jun 2020 14:14:31 -0500</pubDate>
-      
-      <guid>/tags/ubuntu/</guid>
       <description></description>
     </item>
     
