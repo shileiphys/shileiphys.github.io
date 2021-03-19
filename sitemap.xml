@@ -4,46 +4,41 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2021-01-23T18:25:00-05:00</lastmod>
+    <lastmod>2021-01-19T18:25:00-05:00</lastmod>
   </url>
   
   <url>
     <loc>/tags/nordic/</loc>
-    <lastmod>2021-01-23T18:25:00-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/post/nrf9160dk-01/</loc>
-    <lastmod>2021-01-23T18:25:00-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/nrf52840/</loc>
-    <lastmod>2021-01-23T18:25:00-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/post/</loc>
-    <lastmod>2021-01-23T18:25:00-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/storage/</loc>
-    <lastmod>2021-01-23T18:25:00-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
-    <lastmod>2021-01-23T18:25:00-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/uicr/</loc>
-    <lastmod>2021-01-23T18:25:00-05:00</lastmod>
+    <lastmod>2021-01-19T18:25:00-05:00</lastmod>
   </url>
   
   <url>
     <loc>/post/nrf52-storage-2/</loc>
+    <lastmod>2021-01-19T18:25:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/nrf52840/</loc>
+    <lastmod>2021-01-19T18:25:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2021-01-19T18:25:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/storage/</loc>
+    <lastmod>2021-01-19T18:25:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2021-01-19T18:25:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/uicr/</loc>
     <lastmod>2021-01-19T18:25:00-05:00</lastmod>
   </url>
   

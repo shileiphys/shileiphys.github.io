@@ -6,21 +6,7 @@
     <description>Recent content on NeiNeiHippo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 23 Jan 2021 18:25:00 -0500</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Nordic NRF9160 Part I - Getting Started</title>
-      <link>/post/nrf9160dk-01/</link>
-      <pubDate>Sat, 23 Jan 2021 18:25:00 -0500</pubDate>
-      
-      <guid>/post/nrf9160dk-01/</guid>
-      <description>Install 1. nRF connect chmod a+x nrfconnect361x8664.AppImage
-2 J-Link Software and Documentation pack for Linux DEB installer, 64-bit
-Updating the DK firmware Creating an nRF Connect for Cloud account Updating the nRF Connect for Cloud certificate Connecting the DK to nRF Connect for Cloud Add sim card
-The device is now provisioned on nRF Connect for Cloud, but it is not yet associated with your account
-Add device
-https://devzone.nordicsemi.com/f/nordic-q-a/60229/still-working-message-on-activation-of-ibasis-sim-card</description>
-    </item>
-    
+    <lastBuildDate>Tue, 19 Jan 2021 18:25:00 -0500</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Nordic NRF52840 Storage Part II</title>
       <link>/post/nrf52-storage-2/</link>
