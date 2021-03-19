@@ -6,7 +6,21 @@
     <description>Recent content in Nordic on NeiNeiHippo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 Jan 2021 18:25:00 -0500</lastBuildDate><atom:link href="/tags/nordic/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 23 Jan 2021 18:25:00 -0500</lastBuildDate><atom:link href="/tags/nordic/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Nordic NRF9160 Part I - Getting Started</title>
+      <link>/post/nrf9160dk-01/</link>
+      <pubDate>Sat, 23 Jan 2021 18:25:00 -0500</pubDate>
+      
+      <guid>/post/nrf9160dk-01/</guid>
+      <description>Install 1. nRF connect chmod a+x nrfconnect361x8664.AppImage
+2 J-Link Software and Documentation pack for Linux DEB installer, 64-bit
+Updating the DK firmware Creating an nRF Connect for Cloud account Updating the nRF Connect for Cloud certificate Connecting the DK to nRF Connect for Cloud Add sim card
+The device is now provisioned on nRF Connect for Cloud, but it is not yet associated with your account
+Add device
+https://devzone.nordicsemi.com/f/nordic-q-a/60229/still-working-message-on-activation-of-ibasis-sim-card</description>
+    </item>
+    
     <item>
       <title>Nordic NRF52840 Storage Part II</title>
       <link>/post/nrf52-storage-2/</link>
@@ -27,13 +41,11 @@
     
     <item>
       <title>Nordic BLE Advertising Part I</title>
-      <link>/post/nordic-ble-03/</link>
+      <link>/post/nordic-ble-02/</link>
       <pubDate>Sat, 26 Dec 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/nordic-ble-03/</guid>
-      <description>&lt;p&gt;Nordic has a good tutorial &lt;a href=&#34;https://devzone.nordicsemi.com/nordic/short-range-guides/b/bluetooth-low-energy/posts/ble-advertising-a-beginners-tutorial&#34; title=&#34;adv_tutorial&#34;&gt;Bluetooth low energy Advertising, a beginner&amp;rsquo;s tutorial&lt;/a&gt;,
-which describes basic aspects of advertising. In this post, we will go through some
-of the details.&lt;/p&gt;</description>
+      <guid>/post/nordic-ble-02/</guid>
+      <description>&lt;p&gt;Nordic has a good tutorial &lt;a href=&#34;https://devzone.nordicsemi.com/nordic/short-range-guides/b/bluetooth-low-energy/posts/ble-advertising-a-beginners-tutorial&#34; title=&#34;adv_tutorial&#34;&gt;Bluetooth low energy Advertising, a beginner&amp;rsquo;s tutorial&lt;/a&gt;, and two guides of GAP advertising &lt;a href=&#34;https://devzone.nordicsemi.com/nordic/short-range-guides/b/bluetooth-low-energy/posts/bluetooth-smart-and-the-nordics-softdevices-part-1&#34;&gt;Part I&lt;/a&gt; and &lt;a href=&#34;https://devzone.nordicsemi.com/nordic/short-range-guides/b/bluetooth-low-energy/posts/bluetooth-smart-and-the-nordics-softdevices-part-2&#34;&gt;Part II&lt;/a&gt;. In this post, we will go through some of advertising features in details.&lt;/p&gt;</description>
     </item>
     
     <item>

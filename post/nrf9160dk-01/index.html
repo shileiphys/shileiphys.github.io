@@ -4,14 +4,20 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>NXP - NeiNeiHippo</title>
+	<title>Nordic NRF9160 Part I - Getting Started - NeiNeiHippo</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
-		<meta property="og:title" content="NXP" />
-<meta property="og:description" content="Lei&#39;s Personal blog about everything" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="/tags/nxp/" />
-<meta property="og:updated_time" content="2020-06-02T14:14:31-05:00" />
+		<meta property="og:title" content="Nordic NRF9160 Part I - Getting Started" />
+<meta property="og:description" content="Install 1. nRF connect chmod a&#43;x nrfconnect361x8664.AppImage
+2 J-Link Software and Documentation pack for Linux DEB installer, 64-bit
+Updating the DK firmware Creating an nRF Connect for Cloud account Updating the nRF Connect for Cloud certificate Connecting the DK to nRF Connect for Cloud Add sim card
+The device is now provisioned on nRF Connect for Cloud, but it is not yet associated with your account
+Add device
+https://devzone.nordicsemi.com/f/nordic-q-a/60229/still-working-message-on-activation-of-ibasis-sim-card" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/nrf9160dk-01/" />
+<meta property="article:published_time" content="2021-01-23T18:25:00-05:00" />
+<meta property="article:modified_time" content="2021-01-23T18:25:00-05:00" />
 
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -20,7 +26,6 @@
 
 	<link rel="stylesheet" href="/css/style.css">
 	
-	<link rel="alternate" type="application/rss+xml" href="/tags/nxp/index.xml" title="NeiNeiHippo">
 
 	<link rel="shortcut icon" href="/favicon.ico">
 		
@@ -59,30 +64,73 @@
 		<div class="wrapper flex">
 			<div class="primary">
 			
-<main class="main list" role="main">
-	<header class="main__header">
-		<h1 class="main__title">NXP</h1>
-	</header><article class="list__item post">
-	<header class="list__header">
-		<h2 class="list__title post__title">
-			<a href="/post/imx8mm-aosp-01/" rel="bookmark">
-			iMX8M Mini with AOSP Beginner Part 1
-			</a>
-		</h2>
-		<div class="list__meta meta">
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Nordic NRF9160 Part I - Getting Started</h1>
+			<div class="post__meta meta">
 <div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-06-02T14:14:31-05:00">June 02, 2020</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		<p>I recently got an NXP i.MX 8M Mini EVK board. It has rather powerful Arm Cortex-A53, Cortex-M4, Audio, Voice and Video processors. As a total newbie with no previous experiences on Android Operation System Project (<a href="https://source.android.com/" title="AOSP">AOSP</a>) or NXP iMX series, this post records my first hands-on.</p>
-	</div>
-</article>
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2021-01-23T18:25:00-05:00">January 23, 2021</time></div></div>
+		</header><div class="content post__content clearfix">
+			<h2 id="install">Install</h2>
+<h3 id="1-nrf-connect">1. nRF connect</h3>
+<p>chmod a+x nrfconnect361x8664.AppImage</p>
+<h3 id="2-j-link-software-and-documentation-pack-for-linux">2 J-Link Software and Documentation pack for Linux</h3>
+<p>DEB installer, 64-bit</p>
+<h2 id="updating-the-dk-firmware">Updating the DK firmware</h2>
+<h2 id="creating-an-nrf-connect-for-cloud-account">Creating an nRF Connect for Cloud account</h2>
+<h2 id="updating-the-nrf-connect-for-cloud-certificate">Updating the nRF Connect for Cloud certificate</h2>
+<h2 id="connecting-the-dk-to-nrf-connect-for-cloud">Connecting the DK to nRF Connect for Cloud</h2>
+<p>Add sim card</p>
+<p>The device is now provisioned on nRF Connect for Cloud, but it is not yet associated with your account</p>
+<p>Add device</p>
+<p><a href="https://devzone.nordicsemi.com/f/nordic-q-a/60229/still-working-message-on-activation-of-ibasis-sim-card">https://devzone.nordicsemi.com/f/nordic-q-a/60229/still-working-message-on-activation-of-ibasis-sim-card</a></p>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/nordic/" rel="tag">Nordic</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/nrf52840/" rel="tag">NRF52840</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/storage/" rel="tag">Storage</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/uicr/" rel="tag">UICR&#34;</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
 </main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Lei Shi avatar" src="/img/avatar.png" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name"></span>
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/nrf52-storage-2/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">Nordic NRF52840 Storage Part II</p>
+		</a>
+	</div>
+</nav>
 
 
 			</div>
-			
-<aside class="sidebar"><div class="widget-search widget">
+			<aside class="sidebar"><div class="widget-search widget">
 	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
 		<label>
 			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
