@@ -13,7 +13,7 @@
       <pubDate>Thu, 18 Mar 2021 00:00:00 +0000</pubDate>
       
       <guid>/post/ihpc-helmanjaja/</guid>
-      <description>&lt;p&gt;Recently I implemented a list ranking algorithm &lt;em&gt;&amp;ldquo;Designing Practical Efficient Algorithms for Symmetric Multiprocessors&amp;rdquo;&lt;/em&gt; by Helman &amp;amp; JaJa, in my OMSCS course &lt;a href=&#34;https://omscs.gatech.edu/cse-6220-intro-hpc&#34; title=&#34;IHPC&#34;&gt;Intro to High Performance Computing&lt;/a&gt;. The paper can be downloaded &lt;a href=&#34;https://omscs.gatech.edu/cse-6220-intro-hpc&#34; title=&#34;IHPC&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
+      <description>&lt;p&gt;Recently I implemented a list ranking algorithm &lt;em&gt;&amp;ldquo;Designing Practical Efficient Algorithms for Symmetric Multiprocessors&amp;rdquo;&lt;/em&gt; by Helman &amp;amp; JaJa [1], in my OMSCS course &lt;a href=&#34;https://omscs.gatech.edu/cse-6220-intro-hpc&#34; title=&#34;IHPC&#34;&gt;Intro to High Performance Computing&lt;/a&gt;. The paper can be downloaded &lt;a href=&#34;https://www.researchgate.net/publication/220982119_Designing_Practical_Efficient_Algorithms_for_Symmetric_Multiprocessors&#34; title=&#34;HJ_paper&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
     
   </channel>
