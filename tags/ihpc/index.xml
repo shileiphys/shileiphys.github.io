@@ -6,14 +6,14 @@
     <description>Recent content in IHPC on NeiNeiHippo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/ihpc/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 05 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/ihpc/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Parallel List Ranking - Helman &amp; JaJa</title>
-      <link>/post/ihpc-helmanjaja/</link>
-      <pubDate>Thu, 18 Mar 2021 00:00:00 +0000</pubDate>
+      <title>Cache-Oblivious Sorting - Funnel Sort</title>
+      <link>/post/ihpc-funnelsort/</link>
+      <pubDate>Thu, 05 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>/post/ihpc-helmanjaja/</guid>
-      <description>&lt;p&gt;Recently I implemented a list ranking algorithm &lt;em&gt;&amp;ldquo;Designing Practical Efficient Algorithms for Symmetric Multiprocessors&amp;rdquo;&lt;/em&gt; by Helman &amp;amp; JaJa [1], in my OMSCS course &lt;a href=&#34;https://omscs.gatech.edu/cse-6220-intro-hpc&#34; title=&#34;IHPC&#34;&gt;Intro to High Performance Computing&lt;/a&gt;. The paper can be downloaded &lt;a href=&#34;https://www.researchgate.net/publication/220982119_Designing_Practical_Efficient_Algorithms_for_Symmetric_Multiprocessors&#34; title=&#34;HJ_paper&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
+      <guid>/post/ihpc-funnelsort/</guid>
+      <description>&lt;p&gt;This past spring I took the class CSE6220 &lt;a href=&#34;https://omscs.gatech.edu/cse-6220-intro-hpc&#34; title=&#34;IHPC&#34;&gt;Intro to High Performance Computing&lt;/a&gt;. Though the name says introductory, the content is pretty hard and the workload is heavy. However, the projects were quite fun.&lt;/p&gt;</description>
     </item>
     
   </channel>
