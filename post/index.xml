@@ -8,11 +8,11 @@
     <language>en-us</language>
     <lastBuildDate>Thu, 05 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Cache-Oblivious Sorting - Funnel Sort</title>
-      <link>/post/ihpc-funnelsort/</link>
+      <title>IHPC Summary</title>
+      <link>/post/cse6220-ihpc/</link>
       <pubDate>Thu, 05 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>/post/ihpc-funnelsort/</guid>
+      <guid>/post/cse6220-ihpc/</guid>
       <description>&lt;p&gt;This past spring I took the class CSE6220 &lt;a href=&#34;https://omscs.gatech.edu/cse-6220-intro-hpc&#34; title=&#34;IHPC&#34;&gt;Intro to High Performance Computing&lt;/a&gt;. Though the name says introductory, the content is pretty hard and the workload is heavy. However, the projects were quite fun.&lt;/p&gt;</description>
     </item>
     
