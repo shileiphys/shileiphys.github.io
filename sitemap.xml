@@ -3,17 +3,17 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/tags/ihpc/</loc>
-    <lastmod>2021-08-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/post/cse6220-ihpc/</loc>
     <lastmod>2021-08-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/</loc>
+    <lastmod>2021-08-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/omscs/</loc>
     <lastmod>2021-08-05T00:00:00+00:00</lastmod>
   </url>
   
