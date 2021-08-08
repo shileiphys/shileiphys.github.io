@@ -4,15 +4,15 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Stereo Correspondence - NeiNeiHippo</title>
+	<title>GIOS Summary - NeiNeiHippo</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
-		<meta property="og:title" content="Stereo Correspondence" />
-<meta property="og:description" content="To be updated &hellip;" />
+		<meta property="og:title" content="GIOS Summary" />
+<meta property="og:description" content="I took the summer class CS6200 Graduate Introduction to Operating Systems, which is primarily geared towards students with non-CS background like me, and I found the course to be very informative." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/post/stereo/" />
-<meta property="article:published_time" content="2021-03-19T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-03-19T00:00:00+00:00" />
+<meta property="og:url" content="/post/cs6200-gios/" />
+<meta property="article:published_time" content="2021-08-06T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-08-06T00:00:00+00:00" />
 
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -62,20 +62,21 @@
 <main class="main" role="main">
 	<article class="post">
 		<header class="post__header">
-			<h1 class="post__title">Stereo Correspondence</h1>
+			<h1 class="post__title">GIOS Summary</h1>
 			<div class="post__meta meta">
 <div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2021-03-19T00:00:00Z">March 19, 2021</time></div></div>
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2021-08-06T00:00:00Z">August 06, 2021</time></div></div>
 		</header><div class="content post__content clearfix">
-			<p>To be updated &hellip;</p>
-<p><a href="https://docs.opencv.org/master/d3/d14/tutorial_ximgproc_disparity_filtering.html">https://docs.opencv.org/master/d3/d14/tutorial_ximgproc_disparity_filtering.html</a>
-<a href="https://docs.opencv.org/master/d2/d85/classcv_1_1StereoSGBM.html#details">https://docs.opencv.org/master/d2/d85/classcv_1_1StereoSGBM.html#details</a>
-<a href="https://docs.opencv.org/master/dd/d53/tutorial_py_depthmap.html">https://docs.opencv.org/master/dd/d53/tutorial_py_depthmap.html</a>
-<a href="http://wiki.ros.org/stereo_image_proc/Tutorials/ChoosingGoodStereoParameters">http://wiki.ros.org/stereo_image_proc/Tutorials/ChoosingGoodStereoParameters</a>
-<a href="https://sourishghosh.com/2016/dense-disparity-maps-orb-descriptors/">https://sourishghosh.com/2016/dense-disparity-maps-orb-descriptors/</a>
-<a href="https://www.scantips.com/lights/fieldofviewmath.html#:~:text=The%20definition%20of%20macro%201,f%2C%20or%202f%20%3D%20s1">https://www.scantips.com/lights/fieldofviewmath.html#:~:text=The%20definition%20of%20macro%201,f%2C%20or%202f%20%3D%20s1</a>.
-<a href="https://www.python-course.eu/matrix_arithmetic.php">https://www.python-course.eu/matrix_arithmetic.php</a>
-<a href="https://math.stackexchange.com/questions/2170534/proof-of-associativity-of-convolution">https://math.stackexchange.com/questions/2170534/proof-of-associativity-of-convolution</a></p>
+			<p>I took the summer class CS6200 <a href="https://omscs.gatech.edu/cs-6200-introduction-operating-systems" title="GIOS">Graduate Introduction to Operating Systems</a>, which is primarily geared towards students with non-CS background like me, and I found the course to be very informative.</p>
+<p>The lectures have covered various aspects of the OS, Linux in partical, areas includes: threads and concurrency, scheduling, memory and I/O management, inter-process communication,virtualization, distrubted file system, distributed shared memory etc. The protjects, however, are more tightly wrapped around multithreading and handling files. C was required for the first two projects, while C++14 was used for the final one.</p>
+<h1 id="memory-ownership-and-pointers">Memory Ownership and Pointers</h1>
+<p>Since the projects are built with <a href="https://github.com/google/sanitizers/wiki/AddressSanitizer" title="address_sanitizer">Goolge Address Sanitizer</a>, it is important to understand the memory ownership and pointers. The references from <a href="https://insights.sei.cmu.edu/blog/using-the-pointer-ownership-model-to-secure-memory-management-in-c-and-c/" title="ownership2">here</a>, <a href="https://stackoverflow.com/questions/60046802/understanding-memory-ownership-models-in-c" title="ownership2">here</a>, and <a href="https://www.tomdalling.com/blog/software-design/resource-acquisition-is-initialisation-raii-explained/" title="ownership3">here</a> can be helpful to understand concept.</p>
+<h1 id="multithreading---shared-memory">Multithreading - Shared Memory</h1>
+<p><strong>PThread</strong> is used in the majority of the projects. Primary focus is using <code>mutex</code> and <code>condition variable</code> to avoid race conditions and deadlocks, but also to achieve good performance under heavy load. I&rsquo;ve found the &ldquo;Reader/Writer Example'' from the lecture below to be a good starting point.</p>
+<p><img src="/images/mutex_cond.png" alt="mutex_cond"></p>
+<p>POSIX <strong>shared memory</strong> API, such as <code>shm</code> and <code>mmap</code>, is also used for inter-process communication, though you may also choose <code>system V</code>. Besides PThread <code>mutex</code>, <code>semaphore</code> is also a convenient choice.</p>
+<h1 id="file-handlings">File Handlings</h1>
+<p>File handlings, such as reads, write, and transfer various sizes of files (from tiny to huge) through either network or shared memory, are required throughout all projects. For the last project, we were asked to use Google&rsquo;s open source Remote Procedure Call (RPC) framework <a href="https://grpc.io/" title="gRPC">gRPC</a> to design and implement a simple distributed file system (DFS), where files are synchronized between multiple clients and a single server. You can find the <strong>Protocol Buffers 3 Language Guide</strong> <a href="https://developers.google.com/protocol-buffers/docs/proto3" title="proto3">here</a>. I also found the C++ <a href="https://github.com/grpc/grpc/tree/master/examples/cpp" title="example">examples</a> to be extremely helpful for using gRPC’s asynchronous/non-blocking APIs.</p>
 		</div>
 		<footer class="post__footer">
 			
@@ -83,7 +84,7 @@
 	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
 	<ul class="tags__list">
 		<li class="tags__item">
-			<a class="tags__link btn" href="/tags/stereo/" rel="tag">stereo</a>
+			<a class="tags__link btn" href="/tags/omscs/" rel="tag">OMSCS</a>
 		</li>
 	</ul>
 </div>
@@ -102,14 +103,8 @@
 
 <nav class="pager flex">
 	<div class="pager__item pager__item--prev">
-		<a class="pager__link" href="/post/nrf52-storage-2/" rel="prev">
+		<a class="pager__link" href="/post/cse6220-ihpc/" rel="prev">
 			<span class="pager__subtitle">«&thinsp;Previous</span>
-			<p class="pager__title">Nordic NRF52840 Storage Part II</p>
-		</a>
-	</div>
-	<div class="pager__item pager__item--next">
-		<a class="pager__link" href="/post/cse6220-ihpc/" rel="next">
-			<span class="pager__subtitle">Next&thinsp;»</span>
 			<p class="pager__title">IHPC Summary</p>
 		</a>
 	</div>

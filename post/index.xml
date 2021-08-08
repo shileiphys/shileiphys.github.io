@@ -6,7 +6,16 @@
     <description>Recent content in Posts on NeiNeiHippo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 06 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GIOS Summary</title>
+      <link>/post/cs6200-gios/</link>
+      <pubDate>Fri, 06 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/post/cs6200-gios/</guid>
+      <description>&lt;p&gt;I took the summer class CS6200 &lt;a href=&#34;https://omscs.gatech.edu/cs-6200-introduction-operating-systems&#34; title=&#34;GIOS&#34;&gt;Graduate Introduction to Operating Systems&lt;/a&gt;, which is primarily geared towards students with non-CS background like me, and I found the course to be very informative.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>IHPC Summary</title>
       <link>/post/cse6220-ihpc/</link>
