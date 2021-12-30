@@ -6,22 +6,31 @@
     <description>Recent content in Posts on SciTechNotes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 24 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Distributed Computing Summary</title>
+      <link>/post/omscs-cs7210-dc/</link>
+      <pubDate>Fri, 24 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/post/omscs-cs7210-dc/</guid>
+      <description>I just finished the CS7210 Distributed Computing this Fall. Don&amp;rsquo;t be scared by the OMSCentral review, the course is wonderful. It does require amount of more time and effort than many other courses, but the schedule and workload have been modified from the Sprint semester which it was first offered, and it felt much more balanced now. For the last projects, it&amp;rsquo;s not hard to get it working under simple conditions; however, it&amp;rsquo;s really hard to get full credits with a fault-tolerant version, particularly for messages being delayed or duplicated, and servers being crushed and recouped.</description>
+    </item>
+    
     <item>
       <title>GIOS Summary</title>
-      <link>/post/cs6200-gios/</link>
+      <link>/post/omscs-cs6200-gios/</link>
       <pubDate>Fri, 06 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>/post/cs6200-gios/</guid>
+      <guid>/post/omscs-cs6200-gios/</guid>
       <description>&lt;p&gt;I took the summer class CS6200 &lt;a href=&#34;https://omscs.gatech.edu/cs-6200-introduction-operating-systems&#34; title=&#34;GIOS&#34;&gt;Graduate Introduction to Operating Systems&lt;/a&gt;, which is primarily geared towards students with non-CS background like me, and I found the course to be very informative.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>IHPC Summary</title>
-      <link>/post/cse6220-ihpc/</link>
+      <link>/post/omscs-cse6220-ihpc/</link>
       <pubDate>Thu, 05 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>/post/cse6220-ihpc/</guid>
+      <guid>/post/omscs-cse6220-ihpc/</guid>
       <description>&lt;p&gt;This past spring I took the class CSE6220 &lt;a href=&#34;https://omscs.gatech.edu/cse-6220-intro-hpc&#34; title=&#34;IHPC&#34;&gt;Intro to High Performance Computing&lt;/a&gt;. Though the name says introductory, the content is pretty hard and the workload is heavy. However, the projects were quite fun. Since all projects were implemented with C, &lt;strong&gt;pointer&lt;/strong&gt; manipulation is a must to master in order to achieve a good performance score. Recursion is heavily used too.&lt;/p&gt;</description>
     </item>
     
